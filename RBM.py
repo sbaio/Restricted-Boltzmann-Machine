@@ -208,9 +208,9 @@ class RBM(object):
 		for i in range(self.k-1):
 			(new_hidden_state, new_vis_state, new_h_sigmoid_activation) = self.gibbs_sampling_from_vis_state(new_vis_state)
 		
-		new_h_sigmoid_activation = new_h_sigmoid_activation if self.k > 1 else h_sigmoid_activation
+		new_h_sigmoid_activation = self.hidden_sigmoid_activation(new_vis_state)
 		dW = h_sigmoid_activation.dot(vis_state.T) - new_h_sigmoid_activation.dot(new_vis_state.T)
-		dhbias = h_sigmoid_activation - self.hidden_sigmoid_activation(new_vis_state)
+		dhbias = h_sigmoid_activation - new_h_sigmoid_activation
 		dvbias = vis_state - new_vis_state
 
 		return (dW, dhbias, dvbias)
@@ -222,7 +222,7 @@ class RBM(object):
 
 		'''
 		(n_image, n_visible) = dateset.shape
-		n_validation = int(n_image * 0.2)
+		n_validation = int(n_image * self.val_ratio)
 		trainset  = dateset[n_validation :]
 		validset = dateset[: n_validation ]
 		n_batch = (n_image - n_validation)/self.batchsize + 1
@@ -261,8 +261,8 @@ class RBM(object):
 
 				##update the parameters 
 				self.W = self.W + self.learning_rate * dW_batch
-				self.dhbias = self.hbias + self.learning_rate * dhbias_batch
-				self.dvbias = self.vbias + self.learning_rate * dvbias_batch
+				self.hbias = self.hbias + self.learning_rate * dhbias_batch
+				self.vbias = self.vbias + self.learning_rate * dvbias_batch
 			log_train = np.mean([self.log_proba(vis_state.reshape((-1, 1))) for vis_state in trainset])
 			traintime = time.clock() 
 			log_val = np.mean([self.log_proba(vis_state.reshape((-1, 1))) for vis_state in validset])
@@ -270,9 +270,9 @@ class RBM(object):
 			if log_val < final_weight['valid_loss'] : 
 				final_weight['W'] = self.W.tolist()
 				final_weight['hidden_bias'] = self.hbias.tolist()
-				final_weight['vbias'] = self.vbias.tolist()
+				final_weight['visible_bias'] = self.vbias.tolist()
 				final_weight['train_loss'] = log_train
-				final_weight['valid_loss'] = log_val
+				final_weight['valid_loss'] = log_val	
 				with open(outputJson, 'w') as outfile:
 					json.dump(final_weight, outfile, separators=(',', ':'), indent = 2)
 			print 'at epoch %d, training negative log proba is %.5f, validation negative log proba is %.5f, using time : %.5f'%(current_epoch, log_train, log_val, validtime - start_time)
@@ -295,7 +295,7 @@ if __name__ == "__main__":
 	parser.add_argument('-l', '--learning_rate', dest='lrate', type=float, default=0.001, help='The step of gradient descent')
 	parser.add_argument('--iteration_CD', dest='iter_CD', default='1', type=int, help='Number of iterations in the CD algorithm')
 	parser.add_argument('-o', '--outputfile', dest='output', type=str, default='log_training.txt', help='Output file for the training supervision')
-	parser.add_argument('-j', '--outputJson', dest='outjson', type=str, default='we	ight.json', help='Output file store the final coefficient')
+	parser.add_argument('-j', '--outputJson', dest='outjson', type=str, default='weight.json', help='Output file store the final coefficient')
 	parser.add_argument('--batchsize', dest='bsize', type=int, default='100', help='Number of training sample in a single batch')
 	parser.add_argument('--max_epoch', dest='mepoch', type=int, default=10000, help='Number of maximum epochs during the train')
 	parser.add_argument('--val_ratio', dest='vratio',  type=float, default=0.2, help='Ratio of validation set')
@@ -312,7 +312,7 @@ if __name__ == "__main__":
 	(n_images, img_width, img_height) = images.shape
 	dataset = np.zeros((n_images, img_width * img_height))
 	for i in range(n_images) : 
-		dataset[i] = np.squeeze(images[i, :, :].reshape((-1,1)))/255
+		dataset[i] = np.array(np.squeeze(images[i, :, :].reshape((-1,1))) > 0, dtype = np.float32)
 
 	model = RBM(n_visible=img_width * img_height,
 				n_hidden = params['hidden'],
