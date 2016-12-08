@@ -110,11 +110,11 @@ class RBM(object):
 			
 		if hbias is None:
 			# create variable for hidden units bias
-			hbias = np.zeros((n_hidden, 1))
+			hbias = np.zeros((n_hidden, 1), dtype = np.float32)
 
 		if vbias is None:
 			# create variable for visible units bias
-			vbias = np.zeros((n_visible, 1))
+			vbias = np.zeros((n_visible, 1), dtype = np.float32)
 
 		if k < 1:
 			raise RuntimeError('The iteration of Gibbs sampling k should be >= 1')
@@ -210,7 +210,7 @@ class RBM(object):
 		
 		new_h_sigmoid_activation = new_h_sigmoid_activation if self.k > 1 else h_sigmoid_activation
 		dW = h_sigmoid_activation.dot(vis_state.T) - new_h_sigmoid_activation.dot(new_vis_state.T)
-		dhbias = h_sigmoid_activation - new_h_sigmoid_activation
+		dhbias = h_sigmoid_activation - self.hidden_sigmoid_activation(new_vis_state)
 		dvbias = vis_state - new_vis_state
 
 		return (dW, dhbias, dvbias)
@@ -242,8 +242,8 @@ class RBM(object):
 					continue
 				log_proba_batch = 0
 				dW_batch = np.zeros(self.W.shape)
-				dhbias_batch = np.zeros(self.hbias.shape)
-				dvbias_batch = np.zeros(self.vbias.shape)
+				dhbias_batch = np.zeros(self.hbias.shape, dtype = np.float32)
+				dvbias_batch = np.zeros(self.vbias.shape, dtype = np.float32)
 
 				for vis_state in trainset[(i) * self.batchsize : min((i+1) * self.batchsize, len(trainset))]:	
 					vis_state = np.reshape(vis_state, (-1, 1))
@@ -263,7 +263,6 @@ class RBM(object):
 				self.W = self.W + self.learning_rate * dW_batch
 				self.dhbias = self.hbias + self.learning_rate * dhbias_batch
 				self.dvbias = self.vbias + self.learning_rate * dvbias_batch
-
 			log_train = np.mean([self.log_proba(vis_state.reshape((-1, 1))) for vis_state in trainset])
 			traintime = time.clock() 
 			log_val = np.mean([self.log_proba(vis_state.reshape((-1, 1))) for vis_state in validset])
@@ -277,7 +276,7 @@ class RBM(object):
 				with open(outputJson, 'w') as outfile:
 					json.dump(final_weight, outfile, separators=(',', ':'), indent = 2)
 			print 'at epoch %d, training negative log proba is %.5f, validation negative log proba is %.5f, using time : %.5f'%(current_epoch, log_train, log_val, validtime - start_time)
-			log_file.write("\t%d\t%.5f\t%.5f\t%.5f\t%.5f\n"%(current_epoch, log_train, log_val, traintime - start_time, validtime - start_time))
+			log_file.write("\t%d\t%.5f\t%.5f\t%.5f\t%.5f\n"%(current_epoch, log_train, log_val, traintime - start_time, validtime - traintime))
 			current_epoch += 1
 		log_file.close()
 		
@@ -296,7 +295,7 @@ if __name__ == "__main__":
 	parser.add_argument('-l', '--learning_rate', dest='lrate', type=float, default=0.001, help='The step of gradient descent')
 	parser.add_argument('--iteration_CD', dest='iter_CD', default='1', type=int, help='Number of iterations in the CD algorithm')
 	parser.add_argument('-o', '--outputfile', dest='output', type=str, default='log_training.txt', help='Output file for the training supervision')
-	parser.add_argument('-j', '--outputJson', dest='outjson', type=str, default='wight.json', help='Output file store the final coefficient')
+	parser.add_argument('-j', '--outputJson', dest='outjson', type=str, default='we	ight.json', help='Output file store the final coefficient')
 	parser.add_argument('--batchsize', dest='bsize', type=int, default='100', help='Number of training sample in a single batch')
 	parser.add_argument('--max_epoch', dest='mepoch', type=int, default=10000, help='Number of maximum epochs during the train')
 	parser.add_argument('--val_ratio', dest='vratio',  type=float, default=0.2, help='Ratio of validation set')
