@@ -215,7 +215,7 @@ class RBM(object):
 
 		return (dW, dhbias, dvbias)
 
-	def train(self, dateset):
+	def train(self, dateset, outputJson):
 		'''This function trains the input dataset, for the dataset, it will be at first SHUFFLED and separate into different batch
 	
 		# dateset :  n_images * n_visible, each image is in a row vector  
@@ -230,7 +230,9 @@ class RBM(object):
 		log_file = open(self.output_file, 'w')
 		log_file.write("\tNumber of Epoch\tTraining - Log-Probability\tValidation - Log-Probability\tTraining Time(CPU time/s)\tValidation Time(CPU time/s)\n")
 		current_epoch = 1
+		final_weight = {'W' : [], 'hidden_bias' : [], 'visible_bias' : [], 'visible_dim' : self.n_visible, 'hidden_dim' : self.n_hidden, 'train_loss' : 0, 'valid_loss' : np.inf, 'batchsize' : self.batchsize, 'learning_rate': self.learning_rate, 'k' : self.k}
 		while current_epoch < self.max_epoch + 1 :
+			log_weight = open(outputJson,  'w')
 			start_time = time.clock()
 			log_proba_epoch = 0
 			np.random.permutation(trainset)
@@ -263,12 +265,23 @@ class RBM(object):
 				self.dvbias = self.vbias + self.learning_rate * dvbias_batch
 
 			log_train = np.mean([self.log_proba(vis_state.reshape((-1, 1))) for vis_state in trainset])
-			traintime = time.clock() - start_time
+			traintime = time.clock() 
 			log_val = np.mean([self.log_proba(vis_state.reshape((-1, 1))) for vis_state in validset])
-			validtime = time.clock() - traintime
-			print 'at epoch %d, training negative log proba is %.5f, validation negative log proba is %.5f, using time : %.5f'%(current_epoch, log_train, log_val, traintime + validtime)
-			log_file.write("\t%d\t%.5f\t%.5f\t%.5f\t%.5f\n"%(current_epoch, log_train, log_val, traintime, validtime))
+			validtime = time.clock() 
+			if log_val < final_weight['valid_loss'] : 
+				final_weight['W'] = self.W.tolist()
+				final_weight['hidden_bias'] = self.hbias.tolist()
+				final_weight['vbias'] = self.vbias.tolist()
+				final_weight['train_loss'] = log_train
+				final_weight['valid_loss'] = log_val
+				with open(outputJson, 'w') as outfile:
+					json.dump(final_weight, outfile, separators=(',', ':'), indent = 2)
+			print 'at epoch %d, training negative log proba is %.5f, validation negative log proba is %.5f, using time : %.5f'%(current_epoch, log_train, log_val, validtime - start_time)
+			log_file.write("\t%d\t%.5f\t%.5f\t%.5f\t%.5f\n"%(current_epoch, log_train, log_val, traintime - start_time, validtime - start_time))
 			current_epoch += 1
+		log_file.close()
+		
+				
 
 
 
@@ -283,6 +296,7 @@ if __name__ == "__main__":
 	parser.add_argument('-l', '--learning_rate', dest='lrate', type=float, default=0.001, help='The step of gradient descent')
 	parser.add_argument('--iteration_CD', dest='iter_CD', default='1', type=int, help='Number of iterations in the CD algorithm')
 	parser.add_argument('-o', '--outputfile', dest='output', type=str, default='log_training.txt', help='Output file for the training supervision')
+	parser.add_argument('-j', '--outputJson', dest='outjson', type=str, default='wight.json', help='Output file store the final coefficient')
 	parser.add_argument('--batchsize', dest='bsize', type=int, default='100', help='Number of training sample in a single batch')
 	parser.add_argument('--max_epoch', dest='mepoch', type=int, default=10000, help='Number of maximum epochs during the train')
 	parser.add_argument('--val_ratio', dest='vratio',  type=float, default=0.2, help='Ratio of validation set')
@@ -310,8 +324,8 @@ if __name__ == "__main__":
 				val_ratio = params['vratio'],
 				output_file = params['output']
 				)
-	
-	model.train(dataset)
+	outputjson = params['outjson']
+	model.train(dataset, outputjson)
 
 
 	
