@@ -17,3 +17,7 @@ $python RBM.py --help
 
 see Hinton's paper ([A Practical Guide to Training Restricted Boltzmann Machines](https://www.cs.toronto.edu/~hinton/absps/guideTR.pdf))
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Xi
