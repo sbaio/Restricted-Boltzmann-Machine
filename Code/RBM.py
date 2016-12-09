@@ -8,6 +8,7 @@ import os
 import time
 import argparse
 import json
+import show_images as show
 
 
 
@@ -201,7 +202,6 @@ class RBM(object):
 		# d_W : n_visible * n_hidden
 		# d_hbias : n_hidde *  1
 		# d_vbias : n_visible * 1
-
 		'''
 		(new_hidden_state, new_vis_state, h_sigmoid_activation) = self.gibbs_sampling_from_vis_state(vis_state)
 
@@ -306,14 +306,20 @@ if __name__ == "__main__":
 	print json.dumps(params, indent = 2)
 	
 	## image is dimension n_images * 28 * 28
-	images, labels = load_mnist('training', digits=np.arange(10), path = 'data/')
+	images, labels = load_mnist('training', digits=np.arange(10), path = '../Data')
 	#pl.imshow(images.mean(axis=0), cmap='gray')
 	#pl.show()
 	(n_images, img_width, img_height) = images.shape
 	dataset = np.zeros((n_images, img_width * img_height))
+
+	a = images[1]
+	#show.showImage(a)
 	for i in range(n_images) : 
 		dataset[i] = np.array(np.squeeze(images[i, :, :].reshape((-1,1))) > 0, dtype = np.float32)
 
+	b = dataset[1]
+	c = show.vec_to_image(b)
+	show.showImages([a,c])
 	model = RBM(n_visible=img_width * img_height,
 				n_hidden = params['hidden'],
 				learning_rate = params['lrate'],
@@ -323,8 +329,8 @@ if __name__ == "__main__":
 				val_ratio = params['vratio'],
 				output_file = params['output']
 				)
-	outputjson = params['outjson']
-	model.train(dataset, outputjson)
+	#outputjson = params['outjson']
+	#model.train(dataset, outputjson)
 
 
 	
