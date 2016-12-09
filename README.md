@@ -1,7 +1,9 @@
 
 # Restricted-Boltzmann-Machine
 
-An implementation of RBM totally on Python.
+In this project, we plan to discover deeply both theoretical and implementation aspects of the advances in RBM training.
+
+We present an implementation of RBM totally in Python, and the results obtained. We also compare its performance with a deep learning library. (Theano)
 
 ## Requirement 
 
