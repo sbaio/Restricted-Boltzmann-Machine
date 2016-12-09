@@ -1,3 +1,8 @@
 Proposal/project_proposal.aux
 Proposal/project_proposal.log
 Proposal/project_proposal.dvi
+
+Code/weight.json
+Code/log_training.txt
+Code/show_images.pyc
+Code/loadMNIST.pyc
