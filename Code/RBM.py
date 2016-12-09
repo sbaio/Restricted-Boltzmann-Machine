@@ -90,7 +90,7 @@ class RBM(object):
 		if os.path.exists(output_file):
 			print 'Training information will be writed into %s...\n'%output_file
 		else:
-			print '%s is not existed, it will be created to supervise the training process'%output_file
+			print '%s wasnt existing, it will be created to supervise the training process'%output_file
 
 		if seed is None:
 			# create a number generator
@@ -224,17 +224,17 @@ class RBM(object):
 
 		return (dW, dhbias, dvbias)
 
-	def train(self, dateset, outputJson):
+	def train(self, dataset, outputJson):
 		'''This function trains the input dataset, for the dataset, it will be at first SHUFFLED and separate into different batch
 	
-		# dateset :  n_images * n_visible, each image is in a row vector  
+		# dataset :  n_images * n_visible, each image is in a row vector  
 
 		'''
-		(n_image, n_visible) = dateset.shape
-		np.random.permutation(dateset)
+		(n_image, n_visible) = dataset.shape
+		np.random.permutation(dataset)
 		n_validation = int(n_image * self.val_ratio)
-		trainset  = dateset[n_validation :]
-		validset = dateset[: n_validation ]
+		trainset  = dataset[n_validation :]
+		validset = dataset[: n_validation ]
 		n_batch = (n_image - n_validation)/self.batchsize + 1
 
 		log_file = open(self.output_file, 'w')
