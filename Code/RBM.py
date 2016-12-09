@@ -312,7 +312,7 @@ if __name__ == "__main__":
 	print json.dumps(params, indent = 2)
 	
 	## image is dimension n_images * 28 * 28
-	images, labels = load_mnist('training', digits=np.arange(10), path = 'data/')
+	images, labels = load_mnist('training', digits=np.arange(10), path = '../Data/')
 	#pl.imshow(images.mean(axis=0), cmap='gray')
 	#pl.show()
 	(n_images, img_width, img_height) = images.shape
