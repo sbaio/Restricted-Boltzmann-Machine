@@ -1,18 +1,16 @@
-\documentclass{article}
+\documentclass[a4paper,10pt]{article}
 \usepackage[utf8]{inputenc}
-%\usepackage[latin]{inputenc}
+\usepackage{graphicx}
+\usepackage{float, caption,subcaption}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{tgtermes}
-\usepackage{float, caption}
 \usepackage[dvips]{color}
-\usepackage{amsfonts}
-\usepackage{amsmath}
-%\usepackage{bbold}
-%\usepackage{multirow}
-\usepackage{amsthm,amssymb}
+
 \renewcommand{\qedsymbol}{$\blacksquare$}
 \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+
 \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
 
 
@@ -25,35 +23,56 @@
 \newcommand\myworries[1]{\textcolor{red}{#1}}
 \newcommand{\todo}[1]{\textcolor{red}{TODO: #1}\PackageWarning{TODO:}{#1!}}
 \usepackage{listings}
+\usepackage[margin=0.6in]{geometry}
+
 \lstset{language=Matlab}
 \lstset{breaklines}
 \lstset{extendedchars=false}
   \author{Xi SHEN, Othman SBAI, Chaïmaa KADAOUI}
   \title{Restricted Boltzmann Machine - Project proposal}
   \date{Dec, 2016}
+
+
+
 \begin{document}
 \maketitle
+\section{Motivation: project introduction}
+A Restricted Boltzmann Machine (RBM) is a undirected energy-based probabilistic graphical model which can be seen as a two layer neural network (visible and hidden units). RBMs can be used to model and learn important aspects of a probabilty distribution of a training data. They are called restricted, because we impose restrictions on the network topology, by allowing only connections between units of different layers. RBM are energy-based, since they define probability distribution through an energy function. Learning corresponds to shaping the energy so that desirable configurations have a low energy and thus maximize probability of training data under the model. Maximum likelihood learning is challenging for undirected graphical models because MLE parameters cannot be found analytically and the log likelihood gradient based optimization is not tractable. This optimization requires obtaining samples through Markov Chain Monte Carlo, which is computationally demanding. 
+
+Hinton (2002) \cite{praticalGuide}, however showed that biased estimates obtained after running Gibbs chain after a few steps are sufficient for RBM training. He suggested to initialize Gibbs sampling with a sample from the training set and use only one sampling step. This approximation of the log likelihood gradient is referred as k step Contrastive Divergence.
+
 
 \section{Plan of work}
 
-\todo{Add Content}
+\begin{itemize}
+	\item Theory of Restricted Boltzmann Machines, and advanced training techniques.
+	\item Implementing RBM on MNIST data, both in python and comparing the performance using a deeplearning library to be chosen.
+	\item Experimenting how RBM depends on different parameters (learning rate, batch size, Contrastive divergence steps, number of hidden units...)
+	\item Experimenting on robustness of RBM learning (white or black background, image translation..)
+\end{itemize}
+%\section{Plan of work}
 
-\section{Dataset}
+%\todo{Add Content}
 
-\todo{Add Content}
+%\section{Dataset}
 
-\section{Result}
+%\todo{Add Content}
 
-\todo{Add Content}
+%\section{Result}
+
+%\todo{Add Content}
 
 
-\todo{Detail more references}
+%\todo{Detail more references}
 \begin{thebibliography}{9}
 	\setlength{\parskip}{0pt} 
 	
 	\bibitem{praticalGuide} Hinton G. \textit{ A practical guide to training restricted Boltzmann machines[J]. Momentum, 2010, 9(1): 926.}
 	
 	\bibitem{these} Fischer A. \textit{Training restricted boltzmann machines[J]. KI-Künstliche Intelligenz, 2015, 29(4): 441-444.}
+
+	\bibitem{reviewArticle}  Bengio, Y., Delalleau, O. \textit{Justifying and generalizing contrastive divergence}. Neural Computation 21(6), 1601–1621 (2009)
 	
 \end{thebibliography}
 \end{document}
+
