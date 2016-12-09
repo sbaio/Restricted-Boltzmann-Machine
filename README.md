@@ -1,3 +1,4 @@
+
 # Restricted-Boltzmann-Machine
 
 An implementation of RBM totally on Python.
@@ -16,4 +17,5 @@ $python RBM.py --help
 ## Training 
 
 see Hinton's paper ([A Practical Guide to Training Restricted Boltzmann Machines](https://www.cs.toronto.edu/~hinton/absps/guideTR.pdf))
+
 
