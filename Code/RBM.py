@@ -8,7 +8,6 @@ import os
 import time
 import argparse
 import json
-import show_images as show
 
 
 
@@ -19,7 +18,6 @@ def sigmoid(eta):
 def soft_plus(x):
 	'''Return the soft plus function of the argument.
 	a soft approximation of max(0, x)
-
 	'''
 	return np.log(1 + np.exp(x))
 
@@ -59,29 +57,19 @@ class RBM(object):
 		RBM constructor. Defines the parameters of the model along with
 		basic operations for inferring hidden from visible (and vice-versa),
 		as well as for performing CD updates.
-
 		:param n_visible: number of visible units
-
 		:param n_hidden: number of hidden units
-
 		:param learning_rate: step of gradient descent
-
 		:param k: iteration number of Gibbs sampling 
-
 		:param batchsize: batchsize for train
-
 		:param max_epoch: maximum epochs during the train
-
 		:param val_ratio: ratio of validation set  
-
 		:param W: None for standalone RBMs or symbolic variable pointing to a
 		shared weight matrix in case RBM is part of a DBN network; in a DBN,
 		the weights are shared between RBMs and layers of a MLP
-
 		:param hbias: None for standalone RBMs or symbolic variable pointing
 		to a shared hidden units bias vector in case RBM is part of a
 		different network
-
 		:param vbias: None for standalone RBMs or a symbolic variable
 		pointing to a shared visible units bias
 		"""
@@ -91,7 +79,7 @@ class RBM(object):
 		if os.path.exists(output_file):
 			print 'Training information will be written into %s...\n'%output_file
 		else:
-			print '%s wasnot existing, it will be created to supervise the training process'%output_file
+			print '%s doesnt exist, it will be created to supervise the training process'%output_file
 
 		if seed is None:
 			# create a number generator
@@ -134,20 +122,16 @@ class RBM(object):
 		'''This function propagates the visible units activation upwards to
 		the hidden units, and only compute the values JUST AFTER the sigmoid function.
 		It is useful for the gradient descent.
-
 		## vis : visible layer, each node is a pixel
 		## vis : n_visible * 1
-
 		'''
 		return sigmoid(self.W.T.dot(vis_state) + self.hbias)
 
 	def hidden_expectation(self, vis_state):
 		'''This function propagates the visible units activation upwards to
 		the hidden units, and compute directily the hidden units
-
 		## vis : visible layer, each node is a pixel
 		## vis : n_visible * 1
-
 		'''
 		h_sigmoid_activation = self.hidden_sigmoid_activation(vis_state)
 
@@ -157,10 +141,8 @@ class RBM(object):
 	def visible_expectation(self, hidden_state):
 		'''This function propagates the hidden units activation upwards to
 		the visiable units
-
 		## hidden : hidden layer, each node is a pixel
 		## hidden : n_hidden * 1
-
 		'''
 		vis_pre_sigmoid_activation = self.W.dot(hidden_state) + self.vbias
 		vis_state = sigmoid(vis_pre_sigmoid_activation)
@@ -195,7 +177,17 @@ class RBM(object):
 		
 		return (new_hidden_state, new_vis_state)
 
+	def estimate_dist_real_gibbs(self, dataset):
+		'''This function provides another measure for the algo
+			it generates the gibbs sampling from the dataset, then calculate the distance 
+			between the real image and the image from gibbs
+		'''
+		(n_image, n_visible) = dataset.shape
+		(new_hidden_state, new_vis_state, h_sigmoid_activation) = self.gibbs_sampling_from_vis_state(dataset.T)
+		dist = np.linalg.norm(new_vis_state - dataset.T)**2/n_image
 
+		return  dist
+		
 	def gradient_log_proba(self, vis_state): 
 		'''This function compute gradient for a sample, it returns the following parameters with their dimensions info : 
 	
@@ -214,7 +206,6 @@ class RBM(object):
 
 		return (dW, dhbias, dvbias)
 
-
 	def train(self, dataset, outputJson):
 		'''This function trains the input dataset, for the dataset, it will be at first SHUFFLED and separate into different batch
 	
@@ -230,19 +221,7 @@ class RBM(object):
 		log_file = open(self.output_file, 'w')
 		log_file.write("\tNumber of Epoch\tTraining -Dist\tValidation - Dist\tTraining Time(CPU time/s)\tValidation Time(CPU time/s)\n")
 		current_epoch = 1
-
-		final_weight = {
-		'W' : [], 
-		'hidden_bias' : [], 
-		'visible_bias' : [], 
-		'visible_dim' : self.n_visible, 
-		'hidden_dim' : self.n_hidden, 
-		'train_loss' : 0, 
-		'valid_loss' : np.inf, 
-		'batchsize' : self.batchsize, 
-		'learning_rate': self.learning_rate, 
-		'k' : self.k}
-
+		final_weight = {'W' : [], 'hidden_bias' : [], 'visible_bias' : [], 'visible_dim' : self.n_visible, 'hidden_dim' : self.n_hidden, 'train_loss' : 0, 'valid_loss' : np.inf, 'batchsize' : self.batchsize, 'learning_rate': self.learning_rate, 'k' : self.k}
 		print 'at epoch 0, training loss is %.5f, validation loss is %.5f, using time : %.5f'%(self.estimate_dist_real_gibbs(trainset), self.estimate_dist_real_gibbs(validset), 0)
 		while current_epoch < self.max_epoch + 1 :
 			log_weight = open(outputJson,  'w')
@@ -253,10 +232,6 @@ class RBM(object):
 				batchsize = self.batchsize if i <  n_batch - 1 else len(trainset) -  (n_batch - 1) * self.batchsize
 				if batchsize == 0 :
 					continue
-				#log_proba_batch = 0
-				#W_batch = np.zeros(self.W.shape)
-				#dhbias_batch = np.zeros(self.hbias.shape, dtype = np.float32)
-				#dvbias_batch = np.zeros(self.vbias.shape, dtype = np.float32)
 				
 				(dW, dhbias, dvbias) = self.gradient_log_proba(trainset[(i) * self.batchsize : min((i+1) * self.batchsize, len(trainset))].T)
 				dW_batch =  dW.T/batchsize
@@ -291,7 +266,10 @@ class RBM(object):
 			log_file.write("\t%d\t%.5f\t%.5f\t%.5f\t%.5f\n"%(current_epoch, log_train, log_val, traintime - start_time, validtime - traintime))
 			current_epoch += 1
 		log_file.close()
-	
+		
+				
+
+
 
 	
 if __name__ == "__main__":
@@ -300,13 +278,13 @@ if __name__ == "__main__":
 
 	print '******--------- Training RBM on MNIST ------*******'
 	# global setup settings, and checkpoints
-	parser.add_argument('-hi', '--hidden', dest='hidden', type=int, default='50', help='Number of hidden units in the hidden layer')
+	parser.add_argument('-hi', '--hidden', dest='hidden', type=int, default='100', help='Number of hidden units in the hidden layer')
 	parser.add_argument('-l', '--learning_rate', dest='lrate', type=float, default=0.001, help='The step of gradient descent')
 	parser.add_argument('--iteration_CD', dest='iter_CD', default='1', type=int, help='Number of iterations in the CD algorithm')
 	parser.add_argument('-o', '--outputfile', dest='output', type=str, default='log_training.txt', help='Output file for the training supervision')
 	parser.add_argument('-j', '--outputJson', dest='outjson', type=str, default='weight.json', help='Output file store the final coefficient')
 	parser.add_argument('--batchsize', dest='bsize', type=int, default='100', help='Number of training sample in a single batch')
-	parser.add_argument('--max_epoch', dest='mepoch', type=int, default=300, help='Number of maximum epochs during the train')
+	parser.add_argument('--max_epoch', dest='mepoch', type=int, default=100, help='Number of maximum epochs during the train')
 	parser.add_argument('--val_ratio', dest='vratio',  type=float, default=0.2, help='Ratio of validation set')
 
 	args = parser.parse_args()
@@ -315,7 +293,7 @@ if __name__ == "__main__":
 	print json.dumps(params, indent = 2)
 	
 	## image is dimension n_images * 28 * 28
-	images, labels = load_mnist('training', digits=np.arange(10), path = '../Data')
+	images, labels = load_mnist('training', digits=np.arange(10), path = '../Data/')
 	#pl.imshow(images.mean(axis=0), cmap='gray')
 	#pl.show()
 	(n_images, img_width, img_height) = images.shape
@@ -334,25 +312,3 @@ if __name__ == "__main__":
 				)
 	outputjson = params['outjson']
 	model.train(dataset, outputjson)
-
-
-	
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
