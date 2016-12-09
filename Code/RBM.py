@@ -89,9 +89,9 @@ class RBM(object):
 		self.n_hidden = n_hidden
 		output_file = os.path.abspath(output_file)
 		if os.path.exists(output_file):
-			print 'Training information will be writed into %s...\n'%output_file
+			print 'Training information will be written into %s...\n'%output_file
 		else:
-			print '%s is not existed, it will be created to supervise the training process'%output_file
+			print '%s wasnot existing, it will be created to supervise the training process'%output_file
 
 		if seed is None:
 			# create a number generator
@@ -197,7 +197,7 @@ class RBM(object):
 
 
 	def gradient_log_proba(self, vis_state): 
-		'''This function compute gradient for a sample, it returns the following parameters with their dimensions info : 
+		'''This function computes gradient for a sample, it returns the following parameters with their dimensions info : 
 	
 		# d_W : n_visible * n_hidden
 		# d_hbias : n_hidde *  1
@@ -313,7 +313,7 @@ if __name__ == "__main__":
 	dataset = np.zeros((n_images, img_width * img_height))
 
 	a = images[1]
-	#show.showImage(a)
+	
 	for i in range(n_images) : 
 		dataset[i] = np.array(np.squeeze(images[i, :, :].reshape((-1,1))) > 0, dtype = np.float32)
 
@@ -329,8 +329,8 @@ if __name__ == "__main__":
 				val_ratio = params['vratio'],
 				output_file = params['output']
 				)
-	#outputjson = params['outjson']
-	#model.train(dataset, outputjson)
+	outputjson = params['outjson']
+	model.train(dataset, outputjson)
 
 
 	
