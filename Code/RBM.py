@@ -36,7 +36,7 @@ def bernoulli(p):
 	indicating whether a single Bernoulli trial succeeded for the corresponding
 	element of `p`.
 	'''
-	return np.random																									.rand(*p.shape) < p
+	return np.random.rand(*p.shape) < p
 
 class RBM(object):
 	"""Restricted Boltzmann Machine (RBM)  """
@@ -215,16 +215,16 @@ class RBM(object):
 
 		return (dW, dhbias, dvbias)
 
-	def train(self, dateset, outputJson):
+	def train(self, dataset, outputJson):
 		'''This function trains the input dataset, for the dataset, it will be at first SHUFFLED and separate into different batch
 	
-		# dateset :  n_images * n_visible, each image is in a row vector  
+		# dataset :  n_images * n_visible, each image is in a row vector  
 
 		'''
-		(n_image, n_visible) = dateset.shape
+		(n_image, n_visible) = dataset.shape
 		n_validation = int(n_image * self.val_ratio)
-		trainset  = dateset[n_validation :]
-		validset = dateset[: n_validation ]
+		trainset  = dataset[n_validation :]
+		validset = dataset[: n_validation ]
 		n_batch = (n_image - n_validation)/self.batchsize + 1
 
 		log_file = open(self.output_file, 'w')
@@ -296,8 +296,8 @@ if __name__ == "__main__":
 	parser.add_argument('--iteration_CD', dest='iter_CD', default='1', type=int, help='Number of iterations in the CD algorithm')
 	parser.add_argument('-o', '--outputfile', dest='output', type=str, default='log_training.txt', help='Output file for the training supervision')
 	parser.add_argument('-j', '--outputJson', dest='outjson', type=str, default='weight.json', help='Output file store the final coefficient')
-	parser.add_argument('--batchsize', dest='bsize', type=int, default='100', help='Number of training sample in a single batch')
-	parser.add_argument('--max_epoch', dest='mepoch', type=int, default=10000, help='Number of maximum epochs during the train')
+	parser.add_argument('--batchsize', dest='bsize', type=int, default='50', help='Number of training sample in a single batch')
+	parser.add_argument('--max_epoch', dest='mepoch', type=int, default=300, help='Number of maximum epochs during the train')
 	parser.add_argument('--val_ratio', dest='vratio',  type=float, default=0.2, help='Ratio of validation set')
 
 	args = parser.parse_args()
