@@ -6,3 +6,8 @@ Code/weight.json
 Code/log_training.txt
 Code/show_images.pyc
 Code/loadMNIST.pyc
+
+Report/Report.out
+Report/Report.log
+Report/Report.b*
+Report/Report.aux
