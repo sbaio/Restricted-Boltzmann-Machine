@@ -13,7 +13,7 @@ We present our implementation of RBM totally in Python, and the results obtained
 * Numpy
 In order to use the tensorflow implementation
 * Tensorflow
-* yadlt (see https://github.com/blackecho/Deep-Learning-TensorFlow or pip install yadlt)
+* install yadlt through pip, and need to update some tensorflow methods in the implementation since these methods have been deprecated
 
 ## How to Run
 
