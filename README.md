@@ -19,6 +19,9 @@ In order to use the tensorflow implementation
 
 ```
 $python RBM.py --help
+
+In the Directory Code/RBM_yadlt/command_line/ run:
+$python rbm_blackEcho.py
 ```
 
 ## Training 
