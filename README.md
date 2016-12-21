@@ -13,7 +13,9 @@ We present our implementation of RBM totally in Python, and the results obtained
 * Numpy
 In order to use the tensorflow implementation
 * Tensorflow
-* install yadlt through pip, and need to update some tensorflow methods in the implementation since these methods have been deprecated
+* install yadlt through pip
+* copy the three files:
+- Code/RBM_yadlt/command_line/FilesToCopyInInstalledYADLT/* in the corresponding paths in the installed package yadlt
 
 ## How to Run
 
