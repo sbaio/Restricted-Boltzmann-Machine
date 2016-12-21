@@ -15,7 +15,7 @@ In order to use the tensorflow implementation
 * Tensorflow
 * install yadlt through pip
 * copy the three files:
-- Code/RBM_yadlt/command_line/FilesToCopyInInstalledYADLT/* in the corresponding paths in the installed package yadlt
+	- Code/RBM_yadlt/command_line/FilesToCopyInInstalledYADLT/* in the corresponding paths in the installed package yadlt
 
 ## How to Run
 
