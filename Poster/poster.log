@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.12.1)  31 DEC 2016 20:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.12.1)  31 DEC 2016 20:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -953,23 +953,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 154--154
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-<figures/CIFAR_LearnedWeights.png, id=38, 803.0pt x 602.25pt>
-File: figures/CIFAR_LearnedWeights.png Graphic file (type png)
-
-<use figures/CIFAR_LearnedWeights.png>
-Package pdftex.def Info: figures/CIFAR_LearnedWeights.png used on input line 17
-1.
-(pdftex.def)             Requested size: 280.93982pt x 210.70795pt.
-
-<figures/CIFAR_LossOverEpochs_BatchSize.png, id=39, 803.0pt x 602.25pt>
+<figures/CIFAR_LossOverEpochs_BatchSize.png, id=38, 803.0pt x 602.25pt>
 File: figures/CIFAR_LossOverEpochs_BatchSize.png Graphic file (type png)
 
 <use figures/CIFAR_LossOverEpochs_BatchSize.png>
 Package pdftex.def Info: figures/CIFAR_LossOverEpochs_BatchSize.png used on inp
-ut line 171.
+ut line 172.
 (pdftex.def)             Requested size: 280.93982pt x 210.70795pt.
 
-Overfull \hbox (1.90002pt too wide) in paragraph at lines 171--171
+<figures/CIFAR_LearnedWeights.png, id=39, 803.0pt x 602.25pt>
+File: figures/CIFAR_LearnedWeights.png Graphic file (type png)
+
+<use figures/CIFAR_LearnedWeights.png>
+Package pdftex.def Info: figures/CIFAR_LearnedWeights.png used on input line 17
+2.
+(pdftex.def)             Requested size: 280.93982pt x 210.70795pt.
+
+Overfull \hbox (1.90002pt too wide) in paragraph at lines 172--172
 [][] [] 
  []
 
@@ -990,8 +990,8 @@ Missing character: There is no ; in font nullfont!
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./figur
 es/logo.png> <./figures/rbm.png> <./figures/TrainCurve.png> <./figures/MNIST_Fi
-lter_20Epochs.png> <./figures/CIFAR_LearnedWeights.png> <./figures/CIFAR_LossOv
-erEpochs_BatchSize.png>] (./poster.aux) ) 
+lter_20Epochs.png> <./figures/CIFAR_LossOverEpochs_BatchSize.png> <./figures/CI
+FAR_LearnedWeights.png>] (./poster.aux) ) 
 Here is how much of TeX's memory you used:
  19658 strings out of 493014
  417909 string characters out of 6133351
@@ -1019,7 +1019,7 @@ b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
 pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></u
 sr/local/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/loca
 l/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on poster.pdf (1 page, 1297655 bytes).
+Output written on poster.pdf (1 page, 1297653 bytes).
 PDF statistics:
  123 PDF objects out of 1000 (max. 8388607)
  73 compressed objects within 1 object stream
