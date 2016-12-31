@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.12.1)  31 DEC 2016 20:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.12.1)  31 DEC 2016 20:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -995,7 +995,7 @@ FAR_LearnedWeights.png>] (./poster.aux) )
 Here is how much of TeX's memory you used:
  19658 strings out of 493014
  417909 string characters out of 6133351
- 499229 words of memory out of 5000000
+ 500233 words of memory out of 5000000
  22781 multiletter control sequences out of 15000+600000
  31099 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1019,7 +1019,7 @@ b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
 pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></u
 sr/local/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/loca
 l/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on poster.pdf (1 page, 1297653 bytes).
+Output written on poster.pdf (1 page, 1297665 bytes).
 PDF statistics:
  123 PDF objects out of 1000 (max. 8388607)
  73 compressed objects within 1 object stream
