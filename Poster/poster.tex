@@ -98,8 +98,7 @@ It is \emph{restricted} because no connection between nodes of the same layer is
 %----------------------------------------------------------------------------------------
 
 \headerbox{Energy and Probability}{name=energy,column=1,row=0,bottomaligned=definition}{
-
-\smaller
+\small
 We introduce the two bias vectors $c$ and $b$ to define the energy of this graph:
 
 \[ E(x,h) = -h^\top W x - c^\top x - b^\top h \]
@@ -120,7 +119,7 @@ $ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function.
 
 \headerbox{Contrastive Divergence}{name=CD,column=0,span=2,row=0,below=definition}{
 
-\smaller
+
 To train the RBM with our data $\mathbf{x}^{(t)}$, we would like to minimize the average loss:
 $ \frac{1}{T} \sum_t l(f(\mathbf{x}^{(t)})) =  \frac{1}{T} \sum_t - \log p(\mathbf{x}^{(t)}) $
 
@@ -128,48 +127,48 @@ We will apply a stochastic gradient descent. We derive each term of the sum with
 
 \[ \frac{\partial - \log p(\mathbf{x}^{(t)})}{\partial \theta} = \mathbb{E}_h \left[ \frac{\partial E(\mathbf{x}^{(t)} ,h)}{\partial \theta} | \mathbf{x}^{(t)} \right] - \mathbb{E}_{x,h} \left[ \frac{\partial E(\mathbf{x} ,h)}{\partial \theta} \right] \]
 
-The first term is called the \emph{positive phase} and the second term the \emph{negative phase}. Because of the difficulty to compute the seconde term, we will use an algorithm called \emph{Contrastive Divergence}. The key points of the algorithm are:
+The first term is called the \emph{positive phase} and the second term the \emph{negative phase}. Because of the difficulty to compute the second term, we will use an algorithm called \emph{Contrastive Divergence}. The key points of the algorithm are:
 
 \begin{itemize}
 	\itemsep=-0.02em
 	\item We estimate the expectation $\mathbb{E}_{x,h}$ by sampling a single point $\mathbf{\tilde x}$.
 	\item To do so, we use Gibbs sampling in chain (we apply it $k$ times).
 	\item We initialize our Gibbs sampling with $\mathbf{x^{(t)}}$.
+	\item Update parameters W, b, c
 \end{itemize}
 }
 
 
 %----------------------------------------------------------------------------------------
-%	RESULTS
+%	RESULTS on MNIST
 %----------------------------------------------------------------------------------------
 
-\headerbox{Results}{name=results,column=2,span=2}{ % This block's bottom aligns with the bottom of the conclusion block
-\smaller
-We implemented the algorithm and applied it to the MNIST dataset.
+\headerbox{Results On MNIST data}{name=resultsMNIST,column=2,span=2}{ % This block's bottom aligns with the bottom of the conclusion block
+We implemented the RBM training algorithm both using numpy and using tensorflow, we applied it to the MNIST dataset.
 
 \includegraphics[width=0.5\linewidth]{TrainCurve}
-
+\includegraphics[width=0.5\linewidth]{MNIST_Filter_20Epochs}
+%\includegraphics[width=0.5\linewidth]{MNIST_LossOverEpochs_NHidden}
+%\includegraphics[width=0.5\linewidth]{MNIST_LossOverEpochs_BatchSize}
+%\includegraphics[width=0.5\linewidth]{CIFAR_LearnedWeights}
 }
 
 %----------------------------------------------------------------------------------------
-%	CONCLUSION
+%	RESULTS on CIFAR
 %----------------------------------------------------------------------------------------
 
-\headerbox{Conclusion}{name=conclusion,column=2,span=2,row=0,below=results}{
+\headerbox{Results On CIFAR data}{name=resultsCIFAR,column=2,span=2,below=resultsMNIST}{ % This block's bottom aligns with the bottom of the conclusion block
 
-\begin{multicols}{2}
+We implemented the RBM training algorithm both using numpy and using tensorflow, we applied it to the MNIST dataset.
 
-
-\begin{itemize}\compresslist
-\item Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh. Phasellus fermentum rutrum elementum. Nam quis justo lectus.
-\item Vestibulum sem ante, hendrerit a gravida ac, blandit quis magna.
-\item Donec sem metus, facilisis at condimentum eget, vehicula ut massa. Morbi consequat, diam sed convallis tincidunt, arcu nunc.
-\item Nunc at convallis urna. isus ante. Pellentesque condimentum dui. Etiam sagittis purus non tellus tempor volutpat. Donec et dui non massa tristique adipiscing.
-\cite{fischer2014training}
-\end{itemize}
-
-\end{multicols}
+%\includegraphics[width=0.5\linewidth]{TrainCurve}
+%\includegraphics[width=0.5\linewidth]{MNIST_Filter_20Epochs}
+%\includegraphics[width=0.5\linewidth]{MNIST_LossOverEpochs_NHidden}
+%\includegraphics[width=0.5\linewidth]{MNIST_LossOverEpochs_BatchSize}
+\includegraphics[width=0.5\linewidth]{CIFAR_LearnedWeights}
 }
+
+
 %----------------------------------------------------------------------------------------
 %	REFERENCES
 %----------------------------------------------------------------------------------------
@@ -199,7 +198,25 @@ Maecenas viverra ligula a risus blandit vel tincidunt est adipiscing. Suspendiss
 }
 
 
+%----------------------------------------------------------------------------------------
+%	CONCLUSION
+%----------------------------------------------------------------------------------------
 
+\headerbox{Conclusion}{name=conclusion,column=0,span=2,row=0,above=futureresearch,below=CD}{
+
+\begin{multicols}{2}
+
+
+\begin{itemize}\compresslist
+\item Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh. Phasellus fermentum rutrum elementum. Nam quis justo lectus.
+\item Vestibulum sem ante, hendrerit a gravida ac, blandit quis magna.
+\item Donec sem metus, facilisis at condimentum eget, vehicula ut massa. Morbi consequat, diam sed convallis tincidunt, arcu nunc.
+\item Nunc at convallis urna. isus ante. Pellentesque condimentum dui. Etiam sagittis purus non tellus tempor volutpat. Donec et dui non massa tristique adipiscing.
+\cite{fischer2014training}
+\end{itemize}
+
+\end{multicols}
+}
 
 
 %----------------------------------------------------------------------------------------
