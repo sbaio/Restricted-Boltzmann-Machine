@@ -1,0 +1,20 @@
+\begin{thebibliography}{1}
+
+\bibitem{fischer2014training}
+Asja Fischer and Christian Igel.
+\newblock Training restricted boltzmann machines: An introduction.
+\newblock {\em Pattern Recognition}, 47(1):25--39, 2014.
+
+\bibitem{hinton2010practical}
+Geoffrey Hinton.
+\newblock A practical guide to training restricted boltzmann machines.
+\newblock {\em Momentum}, 9(1):926, 2010.
+
+\bibitem{tieleman2008training}
+Tijmen Tieleman.
+\newblock Training restricted boltzmann machines using approximations to the
+  likelihood gradient.
+\newblock In {\em Proceedings of the 25th international conference on Machine
+  learning}, pages 1064--1071. ACM, 2008.
+
+\end{thebibliography}

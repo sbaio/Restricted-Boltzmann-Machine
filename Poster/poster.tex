@@ -1,65 +1,104 @@
-\documentclass[a1paper,portrait]{baposter}
-\usepackage[utf8]{inputenc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% baposter Landscape Poster
+% LaTeX Template
+% Version 1.0 (11/06/13)
+%
+% baposter Class Created by:
+% Brian Amberg (baposter@brian-amberg.de)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[landscape,a1paper,fontscale=0.5]{baposter} % Adjust the font scale/size here
+
+\usepackage{graphicx} % Required for including images
+\graphicspath{{figures/}} % Directory in which figures are stored
+
+\usepackage{amsmath} % For typesetting math
+\usepackage{amssymb} % Adds new symbols to be used in math mode
 \usepackage{relsize}
-\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{booktabs} % Top and bottom rules for tables
+\usepackage{enumitem} % Used to reduce itemize/enumerate spacing
+\usepackage{palatino} % Use the Palatino font
+\usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
+\usepackage{natbib}
 
-%%% Global Settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{multicol} % Required for multiple columns
+\setlength{\columnsep}{1.5em} % Slightly increase the space between columns
+\setlength{\columnseprule}{0mm} % No horizontal rule between columns
 
-\graphicspath{{figures/}}	% Root directory of the pictures 
+\usepackage{tikz} % Required for flow chart
+\usetikzlibrary{shapes,arrows} % Tikz libraries required for the flow chart in the template
 
-%%% Color Definitions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\compresslist}{ % Define a command to reduce spacing within itemize/enumerate environments, this is used right after \begin{itemize} or \begin{enumerate}
+\setlength{\itemsep}{1pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+}
 
-\definecolor{bordercol}{RGB}{40,40,40}
-\definecolor{headercol1}{RGB}{186,215,230}
-\definecolor{headercol2}{RGB}{80,80,80}
-\definecolor{headerfontcol}{RGB}{0,0,0}
-\definecolor{boxcolor}{RGB}{186,215,230}
-\definecolor{bgroundcol}{RGB}{245,245,245}
+\definecolor{lightblue}{rgb}{0.145,0.6666,1} % Defines the color used for content box headers
 
 \begin{document}
-\begin{poster}{
-		grid=false,
-		eyecatcher=false,
-		columns=2,
-		borderColor=bordercol,
-		headerColorOne=headercol1,
-		headerColorTwo=headercol2,
-		headerFontColor=headerfontcol,
-		boxColorOne=boxcolor,
-		headershape=roundedright,
-		textborder=faded,
-		background=plain,
-		bgColorOne=bgroundcol,
-		headerborder=open,
-		boxshade=plain,
-}
-{
-	% Eye catcher
-}
-%% Title
-{\sf\bf
-	Restricted Boltzmann Machine\\
-	{\vspace{0.5em}\Large A Probabilistic Graphical Model course's project}
-}
-%% Authors
-{
-	Chaïmaa Kadaoui, Othman Sbai, Xi Shen
-}
-%% Logo
-{
-	\includegraphics[width=10em]{Logo}
-}
 
-\headerbox{Definition}{name=definition,column=0, row=0}{
-\smaller
+\begin{poster}
+{
+headerborder=closed, % Adds a border around the header of content boxes
+colspacing=1em, % Column spacing
+bgColorOne=white, % Background color for the gradient on the left side of the poster
+bgColorTwo=white, % Background color for the gradient on the right side of the poster
+borderColor=lightblue, % Border color
+headerColorOne=black, % Background color for the header in the content boxes (left side)
+headerColorTwo=lightblue, % Background color for the header in the content boxes (right side)
+headerFontColor=white, % Text color for the header text in the content boxes
+boxColorOne=white, % Background color of the content boxes
+textborder=roundedleft, % Format of the border around content boxes, can be: none, bars, coils, triangles, rectangle, rounded, roundedsmall, roundedright or faded
+eyecatcher=true, % Set to false for ignoring the left logo in the title and move the title left
+headerheight=0.1\textheight, % Height of the header
+headershape=roundedright, % Specify the rounded corner in the content box headers, can be: rectangle, small-rounded, roundedright, roundedleft or rounded
+headerfont=\Large\bf\textsc, % Large, bold and sans serif font in the headers of content boxes
+%textfont={\setlength{\parindent}{1.5em}}, % Uncomment for paragraph indentation
+linewidth=2pt % Width of the border lines around content boxes
+}
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION 
+%----------------------------------------------------------------------------------------
+%
+{\includegraphics[height=4em]{logo.png}} % First university/lab logo on the left
+{\bf\textsc{Restricted Boltzmann Machine}\vspace{0.5em}} % Poster title
+{\textsc{\{ Chaimaa Kadaoui, Othman Sbai and Xi Shen \} \hspace{12pt} ENS Paris Saclay}} % Author names and institution
+{\includegraphics[height=4em]{logo.png}} % Second logo on the right - Ecole des Ponts
+
+%----------------------------------------------------------------------------------------
+%	DEFINITION
+%----------------------------------------------------------------------------------------
+
+\headerbox{Definition}{name=definition,column=0,row=0}{
+
 A Restricted Boltzman Machine is an undirected graph which can be decomposed in two layers.
-
-\includegraphics[width=\linewidth]{rbm}
-
+\begin{center}
+\includegraphics[width=0.75\linewidth]{rbm}
+\end{center}
 It is \emph{restricted} because no connection between nodes of the same layer is supposed. The matrix $W$ characterizes the connections between the two layers. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary.
+
+
+\vspace{0.3em} % When there are two boxes, some whitespace may need to be added if the one on the right has more content
 }
 
-\headerbox{Energy and probability}{name=energy,column=1, row=0}{
+%----------------------------------------------------------------------------------------
+%	ENERGY AND PROBABILITY
+%----------------------------------------------------------------------------------------
+
+\headerbox{Energy and Probability}{name=energy,column=1,row=0,bottomaligned=definition}{
+
 \smaller
 We introduce the two bias vectors $c$ and $b$ to define the energy of this graph:
 
@@ -75,7 +114,12 @@ $Z$ is the partition parameter which can be computed by calculating all the poss
 $ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function.
 }
 
-\headerbox{Contrastive Divergence}{name=CD,column=0, below=definition, span=2}{
+%----------------------------------------------------------------------------------------
+%	CONTRASTIVE DIVERGENCE
+%----------------------------------------------------------------------------------------
+
+\headerbox{Contrastive Divergence}{name=CD,column=0,span=2,row=0,below=definition}{
+
 \smaller
 To train the RBM with our data $\mathbf{x}^{(t)}$, we would like to minimize the average loss:
 $ \frac{1}{T} \sum_t l(f(\mathbf{x}^{(t)})) =  \frac{1}{T} \sum_t - \log p(\mathbf{x}^{(t)}) $
@@ -92,34 +136,74 @@ The first term is called the \emph{positive phase} and the second term the \emph
 	\item To do so, we use Gibbs sampling in chain (we apply it $k$ times).
 	\item We initialize our Gibbs sampling with $\mathbf{x^{(t)}}$.
 \end{itemize}
-
 }
 
-\headerbox{Results}{name=results,column=0, below=CD}{
+
+%----------------------------------------------------------------------------------------
+%	RESULTS
+%----------------------------------------------------------------------------------------
+
+\headerbox{Results}{name=results,column=2,span=2}{ % This block's bottom aligns with the bottom of the conclusion block
 \smaller
 We implemented the algorithm and applied it to the MNIST dataset.
 
-	\includegraphics[width=\linewidth]{TrainCurve}
-}
-\headerbox{Interpretation}{name=interpretation,column=1, below=CD}{
-	
+\includegraphics[width=0.5\linewidth]{TrainCurve}
+
 }
 
-\headerbox{References}{name=refs,column=0, below=results, span=2}{
-\smaller													
-\vspace{-0.4em} 										
-\bibliographystyle{plain}						
-\renewcommand{\section}[2]{\vskip 0.05em}
-\begin{thebibliography}{1}						
-	\itemsep=-0.01em									
-	\setlength{\baselineskip}{0.4em}				
-	\bibitem{praticalGuide} Hinton G. \textit{ A practical guide to training restricted Boltzmann machines[J]. Momentum, 2010, 9(1): 926.}
-	\bibitem{these} Fischer A. \textit{Training restricted boltzmann machines[J]. KI-Künstliche Intelligenz, 2015, 29(4): 441-444.}
-	\bibitem{reviewArticle} Bengio, Y., Delalleau, O. \textit{Justifying and generalizing contrastive divergence}. Neural Computation 21(6), 1601n621 (2009)
-\end{thebibliography}
+%----------------------------------------------------------------------------------------
+%	CONCLUSION
+%----------------------------------------------------------------------------------------
+
+\headerbox{Conclusion}{name=conclusion,column=2,span=2,row=0,below=results}{
+
+\begin{multicols}{2}
+
+
+\begin{itemize}\compresslist
+\item Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh. Phasellus fermentum rutrum elementum. Nam quis justo lectus.
+\item Vestibulum sem ante, hendrerit a gravida ac, blandit quis magna.
+\item Donec sem metus, facilisis at condimentum eget, vehicula ut massa. Morbi consequat, diam sed convallis tincidunt, arcu nunc.
+\item Nunc at convallis urna. isus ante. Pellentesque condimentum dui. Etiam sagittis purus non tellus tempor volutpat. Donec et dui non massa tristique adipiscing.
+\cite{fischer2014training}
+\end{itemize}
+
+\end{multicols}
+}
+%----------------------------------------------------------------------------------------
+%	REFERENCES
+%----------------------------------------------------------------------------------------
+
+\headerbox{References}{name=references,column=2,span=2,above=bottom}{
+
+\renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
+\nocite{*} % Insert publications even if they are not cited in the poster
+\small{ % Reduce the font size in this block
+\bibliographystyle{plain}
+\bibliography{biblio} % Use biblio.bib as the bibliography file
+}}
+
+
+
+%----------------------------------------------------------------------------------------
+%	FUTURE RESEARCH
+%----------------------------------------------------------------------------------------
+
+\headerbox{Future Research}{name=futureresearch,column=0,span=2,above=bottom}{ % This block is as tall as the references block
+
+\begin{multicols}{2}
+Integer sed lectus vel mauris euismod suscipit. Praesent a est a est ultricies pellentesque. Donec tincidunt, nunc in feugiat varius, lectus lectus auctor lorem, egestas molestie risus erat ut nibh.
+
+Maecenas viverra ligula a risus blandit vel tincidunt est adipiscing. Suspendisse mollis iaculis sem, in \emph{imperdiet} orci porta vitae. Quisque id dui sed ante sollicitudin sagittis.
+\end{multicols}
 }
 
 
-	
+
+
+
+%----------------------------------------------------------------------------------------
+
 \end{poster}
+
 \end{document}
