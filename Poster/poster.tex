@@ -87,10 +87,11 @@ A Restricted Boltzman Machine is an undirected graph which can be decomposed in 
 \begin{center}
 \includegraphics[width=0.75\linewidth]{rbm}
 \end{center}
-It is \emph{restricted} because no connection between nodes of the same layer is supposed. The matrix $W$ characterizes the connections between the two layers. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary.
+It is \emph{restricted} because no connection between nodes of the same layer is supposed. The matrix $W$ characterizes the connections between the two layers. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary. This model is called Bernoulli RBM.
 
+The hidden variables can be seen as features and the goal of the RMB is to represent meaningful features.
 
-\vspace{0.3em} % When there are two boxes, some whitespace may need to be added if the one on the right has more content
+%\vspace{0.3em} % When there are two boxes, some whitespace may need to be added if the one on the right has more content
 }
 
 %----------------------------------------------------------------------------------------
@@ -98,7 +99,7 @@ It is \emph{restricted} because no connection between nodes of the same layer is
 %----------------------------------------------------------------------------------------
 
 \headerbox{Energy and Probability}{name=energy,column=1,row=0,bottomaligned=definition}{
-\small
+
 We introduce the two bias vectors $c$ and $b$ to define the energy of this graph:
 
 \[ E(x,h) = -h^\top W x - c^\top x - b^\top h \]
@@ -112,6 +113,7 @@ $Z$ is the partition parameter which can be computed by calculating all the poss
 \textbf{Inference} We can prove that given $\mathbf{x}$, $h_j$ follows a Bernoulli: $$p(h_j=1|x) = sigm(b_j + W_{j.}x)$$
 $ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function.
 }
+
 
 %----------------------------------------------------------------------------------------
 %	CONTRASTIVE DIVERGENCE
@@ -134,7 +136,12 @@ The first term is called the \emph{positive phase} and the second term the \emph
 	\item We estimate the expectation $\mathbb{E}_{x,h}$ by sampling a single point $\mathbf{\tilde x}$.
 	\item To do so, we use Gibbs sampling in chain (we apply it $k$ times).
 	\item We initialize our Gibbs sampling with $\mathbf{x^{(t)}}$.
-	\item Update parameters W, b, c
+	\item Update parameters W, b, c; with $\mathbf{\tilde{x}}$ obtained with the Gibbs sampling and $h(x) = p(h|x) = sigm(b + Wx)$.
+	    \begin{itemize}\compresslist
+		\item $ W = W + \alpha \left( h(\mathbf{x^{(t)}})\mathbf{x^{(t)}}^\top - h(\mathbf{\tilde x})\mathbf{\tilde x}^\top \right) $
+		\item $ b = b + \alpha \left(h(\mathbf{x^{(t)}}) - h(\mathbf{\tilde x}) \right) $
+		\item $ c = c + \alpha \left(\mathbf{x^{(t)}} - \mathbf{\tilde x} \right) $
+		\end{itemize}
 \end{itemize}
 }
 
@@ -144,10 +151,22 @@ The first term is called the \emph{positive phase} and the second term the \emph
 %----------------------------------------------------------------------------------------
 
 \headerbox{Results On MNIST data}{name=resultsMNIST,column=2,span=2}{ % This block's bottom aligns with the bottom of the conclusion block
-We implemented the RBM training algorithm both using numpy and using tensorflow, we applied it to the MNIST dataset.
+We implemented the RBM training algorithm both using numpy and using tensorflow, we applied it to the MNIST dataset (images of handwritten digits). In the case of image data, each pixel is considered as a node; the intensity $p \in [0,1]$ of a pixel is considered as a probability. \\
 
-\includegraphics[width=0.5\linewidth]{TrainCurve}
-\includegraphics[width=0.5\linewidth]{MNIST_Filter_20Epochs}
+The left figure is the evolution of the average stochastic reconstruction $\lVert \mathbf{x^{(t)}} - \mathbf{\tilde{x}} \rVert^2$ for both the training and the test dataset at each iteration. The right figure is the visualization of the connections between one hidden unit and each element of the input vector.
+
+\begin{center}
+\begin{minipage}{7.5in}
+	\centering
+	\raisebox{-0.5\height}{\includegraphics[width=0.47\linewidth]{TrainCurve}}
+	\hspace*{.2in}
+	\raisebox{-0.5\height}{\includegraphics[width=0.47\linewidth]{MNIST_Filter_20Epochs}}
+\end{minipage}
+\end{center}
+
+
+%\includegraphics[width=0.5\linewidth]{TrainCurve}
+%\includegraphics[width=0.5\linewidth]{MNIST_Filter_20Epochs}
 %\includegraphics[width=0.5\linewidth]{MNIST_LossOverEpochs_NHidden}
 %\includegraphics[width=0.5\linewidth]{MNIST_LossOverEpochs_BatchSize}
 %\includegraphics[width=0.5\linewidth]{CIFAR_LearnedWeights}
@@ -159,14 +178,25 @@ We implemented the RBM training algorithm both using numpy and using tensorflow,
 
 \headerbox{Results On CIFAR data}{name=resultsCIFAR,column=2,span=2,below=resultsMNIST}{ % This block's bottom aligns with the bottom of the conclusion block
 
-We implemented the RBM training algorithm both using numpy and using tensorflow, we applied it to the MNIST dataset.
+Using tensorflow, we applied the algorithm to the CIFAR dataset (a dataset of colour images in different classes).\\
+
+The left figure is the evolution of the average stochastic reconstruction at each iteration for different settings of the algorithm. The right figure is the visualization of the connections between one hidden unit and each element of the input vector.
+
+\begin{center}
+	\begin{minipage}{7.5in}
+		\centering
+		\raisebox{-0.5\height}{\includegraphics[width=0.47\linewidth]{CIFAR_LossOverEpochs_BatchSize}}
+		\hspace*{.2in}
+		\raisebox{-0.5\height}{\includegraphics[width=0.47\linewidth]{CIFAR_LearnedWeights}}
+	\end{minipage}
+\end{center}
 
 %\includegraphics[width=0.5\linewidth]{TrainCurve}
 %\includegraphics[width=0.5\linewidth]{MNIST_Filter_20Epochs}
 %\includegraphics[width=0.5\linewidth]{MNIST_LossOverEpochs_NHidden}
 %\includegraphics[width=0.5\linewidth]{MNIST_LossOverEpochs_BatchSize}
-\includegraphics[width=0.5\linewidth]{CIFAR_LossOverEpochs_BatchSize}
-\includegraphics[width=0.5\linewidth]{CIFAR_LearnedWeights}
+%\includegraphics[width=0.5\linewidth]{CIFAR_LossOverEpochs_BatchSize}
+%\includegraphics[width=0.5\linewidth]{CIFAR_LearnedWeights}
 
 
 }
@@ -176,7 +206,7 @@ We implemented the RBM training algorithm both using numpy and using tensorflow,
 %	REFERENCES
 %----------------------------------------------------------------------------------------
 
-\headerbox{References}{name=references,column=2,span=2,above=bottom}{
+\headerbox{References}{name=references,column=0,span=2,above=bottom}{
 
 \renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
 \nocite{*} % Insert publications even if they are not cited in the poster
@@ -188,37 +218,37 @@ We implemented the RBM training algorithm both using numpy and using tensorflow,
 
 
 %----------------------------------------------------------------------------------------
-%	FUTURE RESEARCH
+%	APPLICATIONS
 %----------------------------------------------------------------------------------------
 
-\headerbox{Future Research}{name=futureresearch,column=0,span=2,above=bottom}{ % This block is as tall as the references block
+\headerbox{Applications of RBM}{name=applications,column=0,span=2,below=CD, above=references}{ % This block is as tall as the references block
 
 \begin{multicols}{2}
-Integer sed lectus vel mauris euismod suscipit. Praesent a est a est ultricies pellentesque. Donec tincidunt, nunc in feugiat varius, lectus lectus auctor lorem, egestas molestie risus erat ut nibh.
-
-Maecenas viverra ligula a risus blandit vel tincidunt est adipiscing. Suspendisse mollis iaculis sem, in \emph{imperdiet} orci porta vitae. Quisque id dui sed ante sollicitudin sagittis.
+	\begin{itemize}\compresslist
+		\item RBM is a generative model, but it can be used to improve classification tasks: instead of training on the raw data $\mathbf{x}$, we can use the learnt matrix of connections $W$.
+		\item RBM are also used for collaborative filtering: given a set of N users and M movies, we would like to recommend movies to the users.
+		\item RBM are helpful for computer vision tasks such as object recognition, image denoising and inpainting.
+	\end{itemize}
 \end{multicols}
-}
 
+}
 
 %----------------------------------------------------------------------------------------
 %	CONCLUSION
 %----------------------------------------------------------------------------------------
 
-\headerbox{Conclusion}{name=conclusion,column=0,span=2,row=0,above=futureresearch,below=CD}{
+\headerbox{Conclusion}{name=conclusion,column=2,span=2,above=bottom}{
 
 \begin{multicols}{2}
-
-
 \begin{itemize}\compresslist
-\item Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh. Phasellus fermentum rutrum elementum. Nam quis justo lectus.
-\item Vestibulum sem ante, hendrerit a gravida ac, blandit quis magna.
-\item Donec sem metus, facilisis at condimentum eget, vehicula ut massa. Morbi consequat, diam sed convallis tincidunt, arcu nunc.
-\item Nunc at convallis urna. isus ante. Pellentesque condimentum dui. Etiam sagittis purus non tellus tempor volutpat. Donec et dui non massa tristique adipiscing.
-\cite{fischer2014training}
+%\item As for other deep learning techniques, RBM implementations are costly. The use of GPU achitectures is necessary.
+\item Increasing the number of hidden layers improves the performances but rises the time complexity. We found that about 250 hidden layers is a good trade-off for the MNIST and CIFAR datasets.
+\item The more steps we use for Gibbs sampling, the lower is the bias of our estimate. However it takes more time to compute. An alternative of the Contrastive Divergence algorithm is called Persistent Contrastive Divergence: at each iteration of the algorithm, we initialize the Gibbs sampling with the sample from the previous iteration.
+\item It is possible to adapt the RBM model for unbounded reals by adding a quadratic term ($\frac{1}{2}\mathbf{x}^\top \mathbf{x}$) to the energy. Then, $p(\mathbf{x}|h)$ becomes a Gaussian distribution. This is called Gaussian-Bernoulli RBM.
 \end{itemize}
-
 \end{multicols}
+
+
 }
 
 
