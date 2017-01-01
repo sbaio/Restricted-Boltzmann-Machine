@@ -20,6 +20,7 @@
 
 \documentclass[landscape,a1paper,fontscale=0.5]{baposter} % Adjust the font scale/size here
 
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx} % Required for including images
 \graphicspath{{figures/}} % Directory in which figures are stored
 
@@ -74,7 +75,7 @@ linewidth=2pt % Width of the border lines around content boxes
 %
 {\includegraphics[height=4em]{logo.png}} % First university/lab logo on the left
 {\bf\textsc{Restricted Boltzmann Machine}\vspace{0.5em}} % Poster title
-{\textsc{\{ Chaimaa Kadaoui, Othman Sbai and Xi Shen \} \hspace{12pt} MVA - ENS Paris Saclay}} % Author names and institution
+{\textsc{\{ Chaïmaa Kadaoui, Othman Sbai and Xi Shen \} \hspace{12pt} MVA - ENS Paris Saclay}} % Author names and institution
 {\includegraphics[height=4em]{logo.png}} % Second logo on the right - Ecole des Ponts
 
 %----------------------------------------------------------------------------------------
@@ -136,7 +137,7 @@ The first term is called the \emph{positive phase} and the second term the \emph
 	\item We estimate the expectation $\mathbb{E}_{x,h}$ by sampling a single point $\mathbf{\tilde x}$.
 	\item To do so, we use Gibbs sampling in chain (we apply it $k$ times).
 	\item We initialize our Gibbs sampling with $\mathbf{x^{(t)}}$.
-	\item Update parameters W, b, c; with $\mathbf{\tilde{x}}$ obtained with the Gibbs sampling and $h(x) = p(h|x) = sigm(b + Wx)$.
+	\item Update parameters W, b, c; with $h(x) = p(h|x) = sigm(b + Wx)$ and $\alpha$ the learning rate.
 	    \begin{itemize}\compresslist
 		\item $ W = W + \alpha \left( h(\mathbf{x^{(t)}})\mathbf{x^{(t)}}^\top - h(\mathbf{\tilde x})\mathbf{\tilde x}^\top \right) $
 		\item $ b = b + \alpha \left(h(\mathbf{x^{(t)}}) - h(\mathbf{\tilde x}) \right) $
