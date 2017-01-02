@@ -88,7 +88,7 @@ A Restricted Boltzman Machine is an undirected graph which can be decomposed in 
 \begin{center}
 \includegraphics[width=0.75\linewidth]{rbm}
 \end{center}
-It is \emph{restricted} because no connection between nodes of the same layer is supposed. The matrix $W$ characterizes the connections between the two layers. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary. This model is called Bernoulli RBM.
+It is \emph{restricted} because no connection between nodes of the same layer is supposed. The matrix $W$ characterizes the connections (weights) between the two layers. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary. This model is called Bernoulli RBM.
 
 The hidden variables can be seen as features and the goal of the RMB is to represent meaningful features.
 
@@ -112,7 +112,7 @@ We can write the joint probability of $ \mathbf{x} $ and $ \mathbf{h} $ as:
 $Z$ is the partition parameter which can be computed by calculating all the possibles values of $ \mathbf{x} $  and $ \mathbf{h} $ . In practice, this parameter is intractable. 
 
 \textbf{Inference} We can prove that given $\mathbf{x}$, $h_j$ follows a Bernoulli: $$p(h_j=1|x) = sigm(b_j + W_{j.}x)$$
-$ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function.
+$ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function. We can prove a similar result for $p(x_i=1|h)$.
 }
 
 
@@ -154,7 +154,7 @@ The first term is called the \emph{positive phase} and the second term the \emph
 \headerbox{Results On MNIST data}{name=resultsMNIST,column=2,span=2}{ % This block's bottom aligns with the bottom of the conclusion block
 We implemented the RBM training algorithm both using numpy and using tensorflow, we applied it to the MNIST dataset (images of handwritten digits). In the case of image data, each pixel is considered as a node; the intensity $p \in [0,1]$ of a pixel is considered as a probability. \\
 
-The left figure is the evolution of the average stochastic reconstruction $\lVert \mathbf{x^{(t)}} - \mathbf{\tilde{x}} \rVert^2$ for both the training and the test dataset at each iteration. The right figure is the visualization of the connections between one hidden unit and each element of the input vector.
+The left figure is the evolution of the average stochastic reconstruction $\lVert \mathbf{x^{(t)}} - \mathbf{\tilde{x}} \rVert^2$ for both the training and the test dataset at each iteration. The right figure is the visualization of the weights between one hidden unit and each element of the input vector.
 
 \begin{center}
 \begin{minipage}{7.5in}
@@ -181,7 +181,7 @@ The left figure is the evolution of the average stochastic reconstruction $\lVer
 
 Using tensorflow, we applied the algorithm to the CIFAR dataset (a dataset of colour images in different classes).\\
 
-The left figure is the evolution of the average stochastic reconstruction at each iteration for different settings of the algorithm. The right figure is the visualization of the connections between one hidden unit and each element of the input vector.
+The left figure is the evolution of the average stochastic reconstruction at each iteration for different settings of the algorithm. The right figure is the visualization of the weights between one hidden unit and each element of the input vector.
 
 \begin{center}
 	\begin{minipage}{7.5in}
@@ -226,7 +226,7 @@ The left figure is the evolution of the average stochastic reconstruction at eac
 
 \begin{multicols}{2}
 	\begin{itemize}\compresslist
-		\item RBM is a generative model, but it can be used to improve classification tasks: instead of training on the raw data $\mathbf{x}$, we can use the learnt matrix of connections $W$.
+		\item RBM is a generative model, but it can be used to improve classification tasks: instead of training on the raw data $\mathbf{x}$, we can use the values of the hidden layer $\mathbf{h}$.
 		\item RBM are also used for collaborative filtering: given a set of N users and M movies, we would like to recommend movies to the users.
 		\item RBM are helpful for computer vision tasks such as object recognition, image denoising and inpainting.
 	\end{itemize}
@@ -243,9 +243,9 @@ The left figure is the evolution of the average stochastic reconstruction at eac
 \begin{multicols}{2}
 \begin{itemize}\compresslist
 %\item As for other deep learning techniques, RBM implementations are costly. The use of GPU achitectures is necessary.
-\item Increasing the number of hidden layers improves the performances but rises the time complexity. We found that about 250 hidden layers is a good trade-off for the MNIST and CIFAR datasets.
+\item Increasing the number of hidden layers improves the performances but the risk of overfitting increases. We found that about 250 hidden layers is a good trade-off for the MNIST and CIFAR datasets.
 \item The more steps we use for Gibbs sampling, the lower is the bias of our estimate. However it takes more time to compute. An alternative of the Contrastive Divergence algorithm is called Persistent Contrastive Divergence: at each iteration of the algorithm, we initialize the Gibbs sampling with the sample from the previous iteration.
-\item It is possible to adapt the RBM model for unbounded reals by adding a quadratic term ($\frac{1}{2}\mathbf{x}^\top \mathbf{x}$) to the energy. Then, $p(\mathbf{x}|h)$ becomes a Gaussian distribution. This is called Gaussian-Bernoulli RBM.
+\item It is possible to adapt the RBM model for unbounded reals by adding a quadratic term ($\frac{1}{2}\mathbf{x}^\top \mathbf{x}$) to the energy. Then, $p(\mathbf{x}|h)$ becomes a Gaussian distribution. This is called Gaussian-Bernoulli RBM. However, this model is less stable.
 \end{itemize}
 \end{multicols}
 
