@@ -32,6 +32,7 @@
 \usepackage{palatino} % Use the Palatino font
 \usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
 \usepackage{natbib}
+\usepackage{float}
 
 \usepackage{multicol} % Required for multiple columns
 \setlength{\columnsep}{1.5em} % Slightly increase the space between columns
@@ -115,94 +116,6 @@ $Z$ is the partition parameter which can be computed by calculating all the poss
 $ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function. We can prove a similar result for $p(x_i=1|h)$.
 }
 
-
-%----------------------------------------------------------------------------------------
-%	CONTRASTIVE DIVERGENCE
-%----------------------------------------------------------------------------------------
-
-\headerbox{Contrastive Divergence}{name=CD,column=0,span=2,row=0,below=definition}{
-
-
-To train the RBM with our data $\mathbf{x}^{(t)}$, we would like to minimize the average loss:
-$ \frac{1}{T} \sum_t l(f(\mathbf{x}^{(t)})) =  \frac{1}{T} \sum_t - \log p(\mathbf{x}^{(t)}) $
-
-We will apply a stochastic gradient descent. We derive each term of the sum with respect to our model parameter $\theta$ as follow (where $\mathbb{E}_h$ and $\mathbb{E}_{x,h}$ are expectations of $h$ and $(x,h)$ respectively):
-
-\[ \frac{\partial - \log p(\mathbf{x}^{(t)})}{\partial \theta} = \mathbb{E}_h \left[ \frac{\partial E(\mathbf{x}^{(t)} ,h)}{\partial \theta} | \mathbf{x}^{(t)} \right] - \mathbb{E}_{x,h} \left[ \frac{\partial E(\mathbf{x} ,h)}{\partial \theta} \right] \]
-
-The first term is called the \emph{positive phase} and the second term the \emph{negative phase}. Because of the difficulty to compute the second term, we will use an algorithm called \emph{Contrastive Divergence}. The key points of the algorithm are:
-
-\begin{itemize}
-	\itemsep=-0.02em
-	\item We estimate the expectation $\mathbb{E}_{x,h}$ by sampling a single point $\mathbf{\tilde x}$.
-	\item To do so, we use Gibbs sampling in chain (we apply it $k$ times).
-	\item We initialize our Gibbs sampling with $\mathbf{x^{(t)}}$.
-	\item Update parameters W, b, c; with $h(x) = p(h|x) = sigm(b + Wx)$ and $\alpha$ the learning rate.
-	    \begin{itemize}\compresslist
-		\item $ W = W + \alpha \left( h(\mathbf{x^{(t)}})\mathbf{x^{(t)}}^\top - h(\mathbf{\tilde x})\mathbf{\tilde x}^\top \right) $
-		\item $ b = b + \alpha \left(h(\mathbf{x^{(t)}}) - h(\mathbf{\tilde x}) \right) $
-		\item $ c = c + \alpha \left(\mathbf{x^{(t)}} - \mathbf{\tilde x} \right) $
-		\end{itemize}
-\end{itemize}
-}
-
-
-%----------------------------------------------------------------------------------------
-%	RESULTS on MNIST
-%----------------------------------------------------------------------------------------
-
-\headerbox{Results On MNIST data}{name=resultsMNIST,column=2,span=2}{ % This block's bottom aligns with the bottom of the conclusion block
-We implemented the RBM training algorithm both using numpy and using tensorflow, we applied it to the MNIST dataset (images of handwritten digits). In the case of image data, each pixel is considered as a node; the intensity $p \in [0,1]$ of a pixel is considered as a probability. \\
-
-The left figure is the evolution of the average stochastic reconstruction $\lVert \mathbf{x^{(t)}} - \mathbf{\tilde{x}} \rVert^2$ for both the training and the test dataset at each iteration. The right figure is the visualization of the weights between one hidden unit and each element of the input vector.
-
-\begin{center}
-\begin{minipage}{7.5in}
-	\centering
-	\raisebox{-0.5\height}{\includegraphics[width=0.47\linewidth]{TrainCurve}}
-	\hspace*{.2in}
-	\raisebox{-0.5\height}{\includegraphics[width=0.47\linewidth]{MNIST_Filter_20Epochs}}
-\end{minipage}
-\end{center}
-
-
-%\includegraphics[width=0.5\linewidth]{TrainCurve}
-%\includegraphics[width=0.5\linewidth]{MNIST_Filter_20Epochs}
-%\includegraphics[width=0.5\linewidth]{MNIST_LossOverEpochs_NHidden}
-%\includegraphics[width=0.5\linewidth]{MNIST_LossOverEpochs_BatchSize}
-%\includegraphics[width=0.5\linewidth]{CIFAR_LearnedWeights}
-}
-
-%----------------------------------------------------------------------------------------
-%	RESULTS on CIFAR
-%----------------------------------------------------------------------------------------
-
-\headerbox{Results On CIFAR data}{name=resultsCIFAR,column=2,span=2,below=resultsMNIST}{ % This block's bottom aligns with the bottom of the conclusion block
-
-Using tensorflow, we applied the algorithm to the CIFAR dataset (a dataset of colour images in different classes).\\
-
-The left figure is the evolution of the average stochastic reconstruction at each iteration for different settings of the algorithm. The right figure is the visualization of the weights between one hidden unit and each element of the input vector.
-
-\begin{center}
-	\begin{minipage}{7.5in}
-		\centering
-		\raisebox{-0.5\height}{\includegraphics[width=0.47\linewidth]{CIFAR_LossOverEpochs_BatchSize}}
-		\hspace*{.2in}
-		\raisebox{-0.5\height}{\includegraphics[width=0.47\linewidth]{CIFAR_LearnedWeights}}
-	\end{minipage}
-\end{center}
-
-%\includegraphics[width=0.5\linewidth]{TrainCurve}
-%\includegraphics[width=0.5\linewidth]{MNIST_Filter_20Epochs}
-%\includegraphics[width=0.5\linewidth]{MNIST_LossOverEpochs_NHidden}
-%\includegraphics[width=0.5\linewidth]{MNIST_LossOverEpochs_BatchSize}
-%\includegraphics[width=0.5\linewidth]{CIFAR_LossOverEpochs_BatchSize}
-%\includegraphics[width=0.5\linewidth]{CIFAR_LearnedWeights}
-
-
-}
-
-
 %----------------------------------------------------------------------------------------
 %	REFERENCES
 %----------------------------------------------------------------------------------------
@@ -217,40 +130,131 @@ The left figure is the evolution of the average stochastic reconstruction at eac
 }}
 
 
-
 %----------------------------------------------------------------------------------------
 %	APPLICATIONS
 %----------------------------------------------------------------------------------------
 
-\headerbox{Applications of RBM}{name=applications,column=0,span=2,below=CD, above=references}{ % This block is as tall as the references block
+\headerbox{Applications of RBM}{name=applications,column=0,span=2,below=definition}{ % This block is as tall as the references block
 
 \begin{multicols}{2}
 	\begin{itemize}\compresslist
-		\item RBM is a generative model, but it can be used to improve classification tasks: instead of training on the raw data $\mathbf{x}$, we can use the values of the hidden layer $\mathbf{h}$.
-		\item RBM are also used for collaborative filtering: given a set of N users and M movies, we would like to recommend movies to the users.
-		\item RBM are helpful for computer vision tasks such as object recognition, image denoising and inpainting.
+		\item \textbf{RBM as a generative model}: generate samples from data distribution 
+		\item \textbf{RBM as feature extractor}: unsupervised feature extraction from data, instead of handcrafting features 
+		\item \textbf{RBM for computer vision}: such as object recognition, image denoising and inpainting.
+		\item \textbf{RBM for collaborative filtering}: given a set of N users and M movies, we would like to recommend movies to the users.
 	\end{itemize}
 \end{multicols}
 
 }
 
 %----------------------------------------------------------------------------------------
+%	CONTRASTIVE DIVERGENCE
+%----------------------------------------------------------------------------------------
+
+\headerbox{Training RBM - Contrastive Divergence \cite{hinton2010practical}}{name=CD,column=0,span=2,row=0,below=applications, above=references}{
+
+
+To train the RBM with our data $\mathbf{x}^{(t)}$, we would like to minimize the average loss:
+$ \frac{1}{T} \sum_t l(f(\mathbf{x}^{(t)})) =  \frac{1}{T} \sum_t - \log p(\mathbf{x}^{(t)}) $
+
+We will apply a stochastic gradient descent. We derive each term of the sum with respect to our model parameter $\theta$ as follow (where $\mathbb{E}_h$ and $\mathbb{E}_{x,h}$ are expectations of $h$ and $(x,h)$ respectively):
+
+\[ \frac{\partial - \log p(\mathbf{x}^{(t)})}{\partial \theta} = \mathbb{E}_h \left[ \frac{\partial E(\mathbf{x}^{(t)} ,h)}{\partial \theta} | \mathbf{x}^{(t)} \right] - \mathbb{E}_{x,h} \left[ \frac{\partial E(\mathbf{x} ,h)}{\partial \theta} \right] \]
+
+The first term is called the \emph{positive phase} and the second term the \emph{negative phase}. Because of the difficulty to compute the second term, we will use an algorithm called \emph{Contrastive Divergence}. The key points of the algorithm are:
+
+\begin{itemize}
+	\itemsep=-0.02em
+	\item We estimate the expectation $\mathbb{E}_{x,h}$ by sampling a single point $\mathbf{\tilde x}$.
+	\item To do so, we use Gibbs sampling as a MCMC technique (we apply it $k$ times).
+	\item We initialize our Gibbs sampling with $\mathbf{x^{(t)}}$.
+	\item Update parameters W, b, c; with $h(x) = p(h|x) = sigm(b + Wx)$ and $\alpha$ the learning rate.
+\end{itemize}
+
+$$W \leftarrow W + \alpha \left( h(\mathbf{x^{(t)}})\mathbf{x^{(t)}}^\top - h(\mathbf{\tilde x})\mathbf{\tilde x}^\top \right) ~~~~,~~~~ b \leftarrow b + \alpha \left(h(\mathbf{x^{(t)}}) - h(\mathbf{\tilde x}) \right) ~~~,~~~ c \leftarrow c + \alpha \left(\mathbf{x^{(t)}} - \mathbf{\tilde x} \right)$$
+
+
+}
+
+
+%----------------------------------------------------------------------------------------
 %	CONCLUSION
 %----------------------------------------------------------------------------------------
 
-\headerbox{Conclusion}{name=conclusion,column=2,span=2,above=bottom}{
+\headerbox{Conclusion and improvements}{name=conclusion,column=2,span=2,above=bottom}{
 
 \begin{multicols}{2}
 \begin{itemize}\compresslist
 %\item As for other deep learning techniques, RBM implementations are costly. The use of GPU achitectures is necessary.
-\item Increasing the number of hidden layers improves the performances but the risk of overfitting increases. We found that about 250 hidden layers is a good trade-off for the MNIST and CIFAR datasets.
-\item The more steps we use for Gibbs sampling, the lower is the bias of our estimate. However it takes more time to compute. An alternative of the Contrastive Divergence algorithm is called Persistent Contrastive Divergence: at each iteration of the algorithm, we initialize the Gibbs sampling with the sample from the previous iteration.
+\item The more steps we use for Gibbs sampling, the lower is the bias of our estimate. However, it takes more time to compute. An alternative of the Contrastive Divergence algorithm is called Persistent Contrastive Divergence: at each iteration of the algorithm, we initialize the Gibbs sampling with the sample from the previous iteration.
 \item It is possible to adapt the RBM model for unbounded reals by adding a quadratic term ($\frac{1}{2}\mathbf{x}^\top \mathbf{x}$) to the energy. Then, $p(\mathbf{x}|h)$ becomes a Gaussian distribution. This is called Gaussian-Bernoulli RBM. However, this model is less stable.
 \end{itemize}
 \end{multicols}
 
+\vspace{1em}
 
 }
+
+
+%----------------------------------------------------------------------------------------
+%	RESULTS on MNIST
+%----------------------------------------------------------------------------------------
+
+\headerbox{Results On MNIST and CIFAR data}{name=results,column=2,span=2, above=conclusion}{ % This block's bottom aligns with the bottom of the conclusion block
+
+\begin{multicols}{2}
+We implemented the RBM training algorithm in python and then we compared our implementation performance with an existing deep learning library using tensorflow (YADLT), we applied it to the MNIST dataset (images of handwritten digits). In the case of image data, each pixel is considered as a node; the intensity $p \in [0,1]$ of a pixel is considered as a probability. \\
+
+The figure 1 is the evolution of the average stochastic reconstruction $\lVert \mathbf{x^{(t)}} - \mathbf{\tilde{x}} \rVert^2$ for both the training and the test dataset at each iteration.
+
+\begin{center}
+\includegraphics[width=\linewidth]{TrainCurve}
+\captionof{figure}{\smaller Evolution of training loss over epochs}
+\end{center}
+
+Generating samples from the learned distribution gives us the following reconstruction images shown in figure 2.
+\begin{center}
+    \includegraphics[width=0.15\linewidth]{sample0_at_epoch100}
+    \includegraphics[width=0.15\linewidth]{sample2764_at_epoch100}
+    \includegraphics[width=0.15\linewidth]{sample31227_at_epoch100}
+    \includegraphics[width=0.15\linewidth]{sample44983_at_epoch100}
+    \includegraphics[width=0.15\linewidth]{sample72_at_epoch100}
+    \captionof{figure}{\smaller Generated samples after 20 epochs}
+\end{center}
+
+The figure 3 is the visualization of the extracted features.
+
+\begin{center}
+\includegraphics[width=0.4\linewidth]{MNIST_Filter_20Epochs}
+\includegraphics[width=0.4\linewidth]{CIFAR_LearnedWeights}
+\captionof{figure}{\smaller Extracted features after 20 Epochs, left: MNIST, right: CIFAR}
+\end{center}
+
+In order to understand the influence of parameters involved in RBM training, we compare the evolution of the reconstruction loss over epochs of different batch sizes (figure 4) and different number of hidden units (figure 5) and different number of contrastive divergence steps.
+
+
+\begin{center}
+	\centering
+	\includegraphics[width=\linewidth,height=0.65\linewidth]{batchsize}
+	\captionof{figure}{\smaller Reconstruction loss with 100 hidden units and varying batch size}
+\end{center}
+
+Small batch size achieves smaller reconstruction loss. 
+% Increasing the number of hidden units improves the performance but the risk of overfitting increases. We found that about 250 hidden layers is a good trade-off for the MNIST and CIFAR datasets.
+
+
+\begin{center}
+	\centering
+	\includegraphics[width=\linewidth,height=0.65\linewidth]{batchsize}
+	\captionof{figure}{\smaller Reconstruction loss with varying number of hidden units}
+\end{center}
+Increasing the number of hidden units improves the training performance but rises computation time, 250 hidden units is a good choice for MNIST and CIFAR data. 
+
+\end{multicols}
+
+}
+
+
 
 
 %----------------------------------------------------------------------------------------

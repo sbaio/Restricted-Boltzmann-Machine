@@ -10,6 +10,10 @@ Geoffrey Hinton.
 \newblock A practical guide to training restricted boltzmann machines.
 \newblock {\em Momentum}, 9(1):926, 2010.
 
+\bibitem{RBM_HUGO}
+Hugo Larochelle.
+\newblock Neural networks: Restricted boltzmann machine.
+
 \bibitem{tieleman2008training}
 Tijmen Tieleman.
 \newblock Training restricted boltzmann machines using approximations to the

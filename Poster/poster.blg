@@ -3,44 +3,47 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: poster.aux
 The style file: plain.bst
 Database file #1: biblio.bib
-You've used 3 entries,
+Warning--entry type for "RBM_HUGO" isn't style-file defined
+--line 31 of file biblio.bib
+You've used 4 entries,
             2118 wiz_defined-function locations,
-            519 strings with 4454 characters,
-and the built_in function-call counts, 1052 in all, are:
-= -- 111
-> -- 27
+            524 strings with 4537 characters,
+and the built_in function-call counts, 1245 in all, are:
+= -- 127
+> -- 34
 < -- 1
-+ -- 12
-- -- 8
-* -- 66
-:= -- 167
-add.period$ -- 10
-call.type$ -- 3
-change.case$ -- 13
++ -- 15
+- -- 10
+* -- 71
+:= -- 198
+add.period$ -- 12
+call.type$ -- 4
+change.case$ -- 17
 chr.to.int$ -- 0
-cite$ -- 3
-duplicate$ -- 47
-empty$ -- 93
-format.name$ -- 8
-if$ -- 230
+cite$ -- 4
+duplicate$ -- 54
+empty$ -- 115
+format.name$ -- 10
+if$ -- 272
 int.to.chr$ -- 0
-int.to.str$ -- 3
+int.to.str$ -- 4
 missing$ -- 3
-newline$ -- 18
-num.names$ -- 6
-pop$ -- 12
+newline$ -- 22
+num.names$ -- 8
+pop$ -- 20
 preamble$ -- 1
-purify$ -- 10
+purify$ -- 13
 quote$ -- 0
-skip$ -- 36
+skip$ -- 46
 stack$ -- 0
-substring$ -- 84
-swap$ -- 15
+substring$ -- 89
+swap$ -- 16
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 12
+type$ -- 16
 warning$ -- 0
-while$ -- 12
-width$ -- 4
-write$ -- 36
+while$ -- 14
+width$ -- 5
+write$ -- 43
+(There was 1 warning)
