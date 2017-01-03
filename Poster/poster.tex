@@ -85,13 +85,15 @@ linewidth=2pt % Width of the border lines around content boxes
 
 \headerbox{Definition}{name=definition,column=0,row=0}{
 
-A Restricted Boltzman Machine is an undirected graph which can be decomposed in two layers.
+\small
+Restricted Boltzmann Machines are particular instance of \textbf{undirected graphical models} inspired by neural networks, where the units are organized in two layers. One layer of \emph{visible} units and one layer of \emph{hidden} units with no connections within each layer.
+%A Restricted Boltzman Machine is an undirected graph which can be decomposed in two layers.
 \begin{center}
 \includegraphics[width=0.75\linewidth]{rbm}
 \end{center}
 It is \emph{restricted} because no connection between nodes of the same layer is supposed. The matrix $W$ characterizes the connections (weights) between the two layers. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary. This model is called Bernoulli RBM.
 
-The hidden variables can be seen as features and the goal of the RMB is to represent meaningful features.
+The hidden variables can be seen as features and the goal of the RBM is to represent meaningful features.
 
 %\vspace{0.3em} % When there are two boxes, some whitespace may need to be added if the one on the right has more content
 }
@@ -100,19 +102,19 @@ The hidden variables can be seen as features and the goal of the RMB is to repre
 %	ENERGY AND PROBABILITY
 %----------------------------------------------------------------------------------------
 
-\headerbox{Energy and Probability}{name=energy,column=1,row=0,bottomaligned=definition}{
+\headerbox{Energy and Joint probability}{name=energy,column=1,row=0,bottomaligned=definition}{
 
-We introduce the two bias vectors $c$ and $b$ to define the energy of this graph:
+We introduce the two bias vectors $c$ and $b$ to define the \textbf{energy} of this graph:
 
 \[ E(x,h) = -h^\top W x - c^\top x - b^\top h \]
 
-We can write the joint probability of $ \mathbf{x} $ and $ \mathbf{h} $ as: 
+We can write the \textbf{joint probability} of $ \mathbf{x} $ and $ \mathbf{h} $ as: 
 
 \[ p(x,h) = \exp(-E(x,h)) / Z \]
 
 $Z$ is the partition parameter which can be computed by calculating all the possibles values of $ \mathbf{x} $  and $ \mathbf{h} $ . In practice, this parameter is intractable. 
 
-\textbf{Inference} We can prove that given $\mathbf{x}$, $h_j$ follows a Bernoulli: $$p(h_j=1|x) = sigm(b_j + W_{j.}x)$$
+\textbf{Conditional inference} We can prove that given $\mathbf{x}$, $h_j$ follows a Bernoulli: $$p(h_j=1|x) = sigm(b_j + W_{j.}x)$$
 $ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function. We can prove a similar result for $p(x_i=1|h)$.
 }
 
@@ -124,7 +126,7 @@ $ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function. We can
 
 \renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
 \nocite{*} % Insert publications even if they are not cited in the poster
-\small{ % Reduce the font size in this block
+\smaller{ % Reduce the font size in this block
 \bibliographystyle{plain}
 \bibliography{biblio} % Use biblio.bib as the bibliography file
 }}

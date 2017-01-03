@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.12.1)  3 JAN 2017 11:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.12.1)  3 JAN 2017 14:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1220,17 +1220,20 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 80.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
+LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <9> not available
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 99.
+
 <figures/rbm.png, id=32, 827.09pt x 379.4175pt>
 File: figures/rbm.png Graphic file (type png)
  <use figures/rbm.png>
-Package pdftex.def Info: figures/rbm.png used on input line 97.
+Package pdftex.def Info: figures/rbm.png used on input line 99.
 (pdftex.def)             Requested size: 203.20486pt x 93.21573pt.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 97.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 99.
 LaTeX Font Info:    Font shape `T1/ppl/bx/sc' in size <14.4> not available
-(Font)              Font shape `T1/ppl/b/sc' tried instead on input line 97.
+(Font)              Font shape `T1/ppl/b/sc' tried instead on input line 99.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1240,13 +1243,13 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-LaTeX Font Info:    Try loading font information for OMS+ppl on input line 148.
+LaTeX Font Info:    Try loading font information for OMS+ppl on input line 150.
 
  (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/omsppl.fd
 File: omsppl.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 148.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 150.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1257,7 +1260,7 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Underfull \hbox (badness 10000) in paragraph at lines 255--255
+Underfull \hbox (badness 10000) in paragraph at lines 257--257
 
  []
 
@@ -1265,16 +1268,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 255--255
 File: figures/train_loss.pdf Graphic file (type pdf)
 
 <use figures/train_loss.pdf>
-Package pdftex.def Info: figures/train_loss.pdf used on input line 255.
+Package pdftex.def Info: figures/train_loss.pdf used on input line 257.
 (pdftex.def)             Requested size: 273.44165pt x 133.67638pt.
-LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <9> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 255.
 
 <figures/sample0_at_epoch100.png, id=37, 578.16pt x 433.62pt>
 File: figures/sample0_at_epoch100.png Graphic file (type png)
 
 <use figures/sample0_at_epoch100.png>
-Package pdftex.def Info: figures/sample0_at_epoch100.png used on input line 255
+Package pdftex.def Info: figures/sample0_at_epoch100.png used on input line 257
 .
 (pdftex.def)             Requested size: 41.01457pt x 30.7601pt.
 
@@ -1283,7 +1284,7 @@ File: figures/sample2764_at_epoch100.png Graphic file (type png)
 
 <use figures/sample2764_at_epoch100.png>
 Package pdftex.def Info: figures/sample2764_at_epoch100.png used on input line 
-255.
+257.
 (pdftex.def)             Requested size: 41.01457pt x 30.7601pt.
 
 <figures/sample31227_at_epoch100.png, id=39, 578.16pt x 433.62pt>
@@ -1291,7 +1292,7 @@ File: figures/sample31227_at_epoch100.png Graphic file (type png)
 
 <use figures/sample31227_at_epoch100.png>
 Package pdftex.def Info: figures/sample31227_at_epoch100.png used on input line
- 255.
+ 257.
 (pdftex.def)             Requested size: 41.01457pt x 30.7601pt.
 
 <figures/sample44983_at_epoch100.png, id=40, 578.16pt x 433.62pt>
@@ -1299,7 +1300,7 @@ File: figures/sample44983_at_epoch100.png Graphic file (type png)
 
 <use figures/sample44983_at_epoch100.png>
 Package pdftex.def Info: figures/sample44983_at_epoch100.png used on input line
- 255.
+ 257.
 (pdftex.def)             Requested size: 41.01457pt x 30.7601pt.
 
 <figures/sample72_at_epoch100.png, id=41, 578.16pt x 433.62pt>
@@ -1307,7 +1308,7 @@ File: figures/sample72_at_epoch100.png Graphic file (type png)
 
 <use figures/sample72_at_epoch100.png>
 Package pdftex.def Info: figures/sample72_at_epoch100.png used on input line 25
-5.
+7.
 (pdftex.def)             Requested size: 41.01457pt x 30.7601pt.
 
 <figures/MNIST_Filter_20Epochs.png, id=42, 803.0pt x 602.25pt>
@@ -1315,7 +1316,7 @@ File: figures/MNIST_Filter_20Epochs.png Graphic file (type png)
 
 <use figures/MNIST_Filter_20Epochs.png>
 Package pdftex.def Info: figures/MNIST_Filter_20Epochs.png used on input line 2
-55.
+57.
 (pdftex.def)             Requested size: 109.37498pt x 82.02621pt.
 
 <figures/CIFAR_LearnedWeights.png, id=43, 803.0pt x 602.25pt>
@@ -1323,21 +1324,21 @@ File: figures/CIFAR_LearnedWeights.png Graphic file (type png)
 
 <use figures/CIFAR_LearnedWeights.png>
 Package pdftex.def Info: figures/CIFAR_LearnedWeights.png used on input line 25
-5.
+7.
 (pdftex.def)             Requested size: 109.37498pt x 82.02621pt.
 
 <figures/batchsize.pdf, id=44, 587.19376pt x 442.65375pt>
 File: figures/batchsize.pdf Graphic file (type pdf)
 
 <use figures/batchsize.pdf>
-Package pdftex.def Info: figures/batchsize.pdf used on input line 255.
+Package pdftex.def Info: figures/batchsize.pdf used on input line 257.
 (pdftex.def)             Requested size: 273.43651pt x 177.73378pt.
 
 <figures/hidden_units.pdf, id=45, 587.19376pt x 442.65375pt>
 File: figures/hidden_units.pdf Graphic file (type pdf)
 
 <use figures/hidden_units.pdf>
-Package pdftex.def Info: figures/hidden_units.pdf used on input line 255.
+Package pdftex.def Info: figures/hidden_units.pdf used on input line 257.
 (pdftex.def)             Requested size: 273.43651pt x 177.73378pt.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1357,33 +1358,40 @@ e pdfs with page group included in a single page
 
 pdfTeX warning: pdflatex (file ./figures/hidden_units.pdf): PDF inclusion: mult
 iple pdfs with page group included in a single page
->] (./poster.aux) ) 
+>] (./poster.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+) ) 
 Here is how much of TeX's memory you used:
- 19957 strings out of 493014
- 419532 string characters out of 6133351
- 515864 words of memory out of 5000000
- 23062 multiletter control sequences out of 15000+600000
- 30523 words of font info for 54 fonts, out of 8000000 for 9000
+ 19984 strings out of 493014
+ 419799 string characters out of 6133351
+ 516028 words of memory out of 5000000
+ 23078 multiletter control sequences out of 15000+600000
+ 36473 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,10n,92p,430b,1018s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.
-enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.p
-fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb
-></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
-</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
-/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></u
-sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
-/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/lo
-cal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
-al/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local
-/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/l
-ocal/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/te
-xlive/2016/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2
-016/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on poster.pdf (1 page, 1252769 bytes).
+ 62i,10n,92p,430b,1017s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/
+texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/t
+exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/tex
+live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texli
+ve/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texliv
+e/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive
+/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2
+016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/201
+6/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2016/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2016/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2016/texmf-
+dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2016/te
+xmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2016/texmf-dis
+t/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts
+/type1/urw/palatino/uplri8a.pfb>
+Output written on poster.pdf (1 page, 1268754 bytes).
 PDF statistics:
- 241 PDF objects out of 1000 (max. 8388607)
- 74 compressed objects within 1 object stream
+ 249 PDF objects out of 1000 (max. 8388607)
+ 80 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  181 words of extra memory for PDF output out of 10000 (max. 10000000)
 
