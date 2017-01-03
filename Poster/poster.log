@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.12.1)  2 JAN 2017 19:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.12.1)  3 JAN 2017 11:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1261,12 +1261,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 255--255
 
  []
 
-<figures/TrainCurve.jpeg, id=36, 1205.50375pt x 652.4375pt>
-File: figures/TrainCurve.jpeg Graphic file (type jpg)
+<figures/train_loss.pdf, id=36, 892.53452pt x 436.33014pt>
+File: figures/train_loss.pdf Graphic file (type pdf)
 
-<use figures/TrainCurve.jpeg>
-Package pdftex.def Info: figures/TrainCurve.jpeg used on input line 255.
-(pdftex.def)             Requested size: 273.44165pt x 147.98674pt.
+<use figures/train_loss.pdf>
+Package pdftex.def Info: figures/train_loss.pdf used on input line 255.
+(pdftex.def)             Requested size: 273.44165pt x 133.67638pt.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <9> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 255.
 
@@ -1332,9 +1332,12 @@ File: figures/batchsize.pdf Graphic file (type pdf)
 <use figures/batchsize.pdf>
 Package pdftex.def Info: figures/batchsize.pdf used on input line 255.
 (pdftex.def)             Requested size: 273.43651pt x 177.73378pt.
-File: figures/batchsize.pdf Graphic file (type pdf)
- <use figures/batchsize.pdf>
-Package pdftex.def Info: figures/batchsize.pdf used on input line 255.
+
+<figures/hidden_units.pdf, id=45, 587.19376pt x 442.65375pt>
+File: figures/hidden_units.pdf Graphic file (type pdf)
+
+<use figures/hidden_units.pdf>
+Package pdftex.def Info: figures/hidden_units.pdf used on input line 255.
 (pdftex.def)             Requested size: 273.43651pt x 177.73378pt.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1342,38 +1345,45 @@ Missing character: There is no ; in font nullfont!
  [2
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./figur
-es/logo.png> <./figures/rbm.png> <./figures/TrainCurve.jpeg> <./figures/sample0
-_at_epoch100.png> <./figures/sample2764_at_epoch100.png> <./figures/sample31227
-_at_epoch100.png> <./figures/sample44983_at_epoch100.png> <./figures/sample72_a
-t_epoch100.png> <./figures/MNIST_Filter_20Epochs.png> <./figures/CIFAR_LearnedW
-eights.png> <./figures/batchsize.pdf>] (./poster.aux) ) 
+es/logo.png> <./figures/rbm.png> <./figures/train_loss.pdf> <./figures/sample0_
+at_epoch100.png> <./figures/sample2764_at_epoch100.png> <./figures/sample31227_
+at_epoch100.png> <./figures/sample44983_at_epoch100.png> <./figures/sample72_at
+_epoch100.png> <./figures/MNIST_Filter_20Epochs.png> <./figures/CIFAR_LearnedWe
+ights.png> <./figures/batchsize.pdf
+
+pdfTeX warning: pdflatex (file ./figures/batchsize.pdf): PDF inclusion: multipl
+e pdfs with page group included in a single page
+> <./figures/hidden_units.pdf
+
+pdfTeX warning: pdflatex (file ./figures/hidden_units.pdf): PDF inclusion: mult
+iple pdfs with page group included in a single page
+>] (./poster.aux) ) 
 Here is how much of TeX's memory you used:
- 19955 strings out of 493014
- 419418 string characters out of 6133351
- 515686 words of memory out of 5000000
- 23058 multiletter control sequences out of 15000+600000
+ 19957 strings out of 493014
+ 419532 string characters out of 6133351
+ 515864 words of memory out of 5000000
+ 23062 multiletter control sequences out of 15000+600000
  30523 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,10n,92p,408b,1018s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016
-/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2016/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/font
-s/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2016/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public
-/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/ur
-w/palatino/uplb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palat
-ino/uplr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palatino/upl
-ri8a.pfb>
-Output written on poster.pdf (1 page, 1300881 bytes).
+ 62i,10n,92p,430b,1018s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.
+enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.p
+fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb
+></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
+</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></u
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
+/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/lo
+cal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
+al/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local
+/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/l
+ocal/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2
+016/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on poster.pdf (1 page, 1252769 bytes).
 PDF statistics:
- 151 PDF objects out of 1000 (max. 8388607)
- 64 compressed objects within 1 object stream
+ 241 PDF objects out of 1000 (max. 8388607)
+ 74 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 176 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 181 words of extra memory for PDF output out of 10000 (max. 10000000)
 

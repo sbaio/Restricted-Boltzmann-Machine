@@ -208,7 +208,7 @@ We implemented the RBM training algorithm in python and then we compared our imp
 The figure 1 is the evolution of the average stochastic reconstruction $\lVert \mathbf{x^{(t)}} - \mathbf{\tilde{x}} \rVert^2$ for both the training and the test dataset at each iteration.
 
 \begin{center}
-\includegraphics[width=\linewidth]{TrainCurve}
+\includegraphics[width=\linewidth]{train_loss}
 \captionof{figure}{\smaller Evolution of training loss over epochs}
 \end{center}
 
@@ -245,7 +245,7 @@ Small batch size achieves smaller reconstruction loss.
 
 \begin{center}
 	\centering
-	\includegraphics[width=\linewidth,height=0.65\linewidth]{batchsize}
+	\includegraphics[width=\linewidth,height=0.65\linewidth]{hidden_units}
 	\captionof{figure}{\smaller Reconstruction loss with varying number of hidden units}
 \end{center}
 Increasing the number of hidden units improves the training performance but rises computation time, 250 hidden units is a good choice for MNIST and CIFAR data. 
