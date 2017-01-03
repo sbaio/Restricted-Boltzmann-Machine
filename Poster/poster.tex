@@ -202,10 +202,10 @@ $$W \leftarrow W + \alpha \left( h(\mathbf{x^{(t)}})\mathbf{x^{(t)}}^\top - h(\m
 %	RESULTS on MNIST
 %----------------------------------------------------------------------------------------
 
-\headerbox{Results On MNIST and CIFAR data}{name=results,column=2,span=2, above=conclusion}{ % This block's bottom aligns with the bottom of the conclusion block
+\headerbox{Results On MNIST and CIFAR-10 data}{name=results,column=2,span=2, above=conclusion}{ % This block's bottom aligns with the bottom of the conclusion block
 
 \begin{multicols}{2}
-We implemented the RBM training algorithm in python and then we compared our implementation performance with an existing deep learning library using tensorflow (YADLT), we applied it to the MNIST dataset(images of handwritten digits) and CIFAR (color images of different classes). In the case of image data, each pixel is considered as a node; the intensity $p \in [0,1]$ of a pixel is considered as a probability. \\
+We implemented the RBM training algorithm in python and then we compared our implementation performance with an existing deep learning library using tensorflow (YADLT), we applied it to the MNIST dataset (images of handwritten digits) and CIFAR-10 (color images of different classes). In the case of image data, each pixel is considered as a node; the intensity $p \in [0,1]$ of a pixel is considered as a probability. \\
 
 The figure 1 is the evolution of the average stochastic reconstruction $\lVert \mathbf{x^{(t)}} - \mathbf{\tilde{x}} \rVert^2$ for both the training and the test dataset at each iteration.
 
@@ -232,19 +232,19 @@ The figure 3 is the visualization of the extracted features.
 \captionof{figure}{\smaller Extracted features after 20 Epochs, left: MNIST, right: CIFAR}
 \end{center}
 
-In order to understand the influence of parameters involved in RBM training, we compare the evolution of the reconstruction loss over epochs of different batch sizes (figure 4) and different number of hidden units (figure 5) and different number of contrastive divergence steps.
+In order to understand the influence of parameters involved in RBM training, we compare the evolution of the reconstruction loss over epochs of different batch sizes (figure 4) and different number of hidden units (figure 5) and different number of contrastive divergence steps.\\
 
-
+\textbf{Batch size influence}
 \begin{center}
 	\centering
 	\includegraphics[width=\linewidth,height=0.65\linewidth]{batchsize}
 	\captionof{figure}{\smaller Reconstruction loss with 100 hidden units and varying batch size}
 \end{center}
 
-Small batch size achieves smaller reconstruction loss. 
+Small batch size achieves smaller reconstruction loss. \\
 % Increasing the number of hidden units improves the performance but the risk of overfitting increases. We found that about 250 hidden layers is a good trade-off for the MNIST and CIFAR datasets.
 
-
+\textbf{Number of hidden units influence}
 \begin{center}
 	\centering
 	\includegraphics[width=\linewidth,height=0.65\linewidth]{hidden_units}
