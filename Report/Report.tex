@@ -196,22 +196,104 @@ We can see that $p(x) = \exp\left(-F(x)\right) / Z$ where $F$ is the free energy
 
  
 
-\subsection{Contrastive divergence theory ...}
+\subsection{Contrastive divergence method for training RBM efficiently}
 
+To train the RBM with our data $\mathbf{x}^{(t)}$, we would like to minimize the average loss:
 
+\[ \frac{1}{T} \sum_t l(f(\mathbf{x}^{(t)})) =  \frac{1}{T} \sum_t - \log p(\mathbf{x}^{(t)}) \]
+
+We want to apply a stochastic gradient descent. We derive each term of the sum with respect to our model parameter $\theta$ as follow (where $\mathbb{E}_h$ and $\mathbb{E}_{x,h}$ are expectations of $h$ and $(x,h)$ respectively):
+
+\[ \frac{\partial - \log p(\mathbf{x}^{(t)})}{\partial \theta} = \mathbb{E}_h \left[ \frac{\partial E(\mathbf{x}^{(t)} ,h)}{\partial \theta} | \mathbf{x}^{(t)} \right] - \mathbb{E}_{x,h} \left[ \frac{\partial E(\mathbf{x} ,h)}{\partial \theta} \right] \]
+
+The first term is called the \emph{positive phase} and the second term the {negative phase}. Because of the difficulty to compute the seconde term, we will use an algorithm called \emph{Contrastive Divergence}. The idea is:
+
+\begin{enumerate}
+    \item We estimate the expectation $\mathbb{E}_{x,h}$ by sampling a single point $\mathbf{\tilde x}$.
+    \item To do so, we use Gibbs sampling in chain (we apply it $k$ times).
+    \item We initialize our Gibbs sampling with $\mathbf{x^{(t)}}$.
+\end{enumerate}
+
+Therefore we can rewrite each term as:
+
+\[ \mathbb{E}_h \left[ \frac{\partial E(\mathbf{x}^{(t)} ,h)}{\partial \theta} | \mathbf{x}^{(t)} \right] \simeq \frac{\partial E(\mathbf{x}^{(t)} ,h(\mathbf{x}^{(t)}))}{\partial \theta} \]
+
+\[ \mathbb{E}_{x,h} \left[ \frac{\partial E(\mathbf{x} ,h)}{\partial \theta} \right] \simeq \frac{\partial E(\mathbf{\tilde x} ,h(\mathbf{\tilde x}))}{\partial \theta} \]
+
+The goal is to minimize the energy of our training data and to increase the energy of our samplings at each iteration until we have samplings similar to our training data.
+
+We define for a given $x$, the vector $h(x)$ as:
+
+\[ h(x) =
+\begin{bmatrix}
+    p(h_1 = 1 | x)  \\
+    \vdots \\
+    p(h_H = 1 | x)
+\end{bmatrix}
+\]
+
+$$ h(x) = sigm(b + Wx) $$
+
+Let's look at the derivative of the energy $E$ with respect to $W$, we can prove that:
+
+\[ \nabla_{\mathbf{W}} E(x,h) = -h(x) x^\top \]
+
+Therefore, we can update $W$ ($\alpha$ is the step of the gradient descent):
+
+\[ W = W + \alpha \left( h(\mathbf{x^{(t)}})\mathbf{x^{(t)}}^\top - h(\mathbf{\tilde x})\mathbf{\tilde x}^\top \right) \]
+
+We do the same to update $b$ and $c$:
+
+\[ b = b + \alpha \left(h(\mathbf{x^{(t)}}) - h(\mathbf{\tilde x}) \right)  ~~~~~~~~~,~~~~~~~~~ c = c + \alpha \left(\mathbf{x^{(t)}} - \mathbf{\tilde x} \right)\]
+
+%\[  \]
+
+\begin{enumerate}
+    \item For each $\mathbf{x^{(t)}}$
+    \begin{enumerate}
+        \item Generate sample $ \tilde{\mathbf{x}} $ using $ k $ steps Gibbs sampling starting at $\mathbf{x^{(t)}}$
+        \item Update parameters:
+        \begin{itemize}
+            \item $ W = W + \alpha \left( h(\mathbf{x^{(t)}})\mathbf{x^{(t)}}^\top - h(\mathbf{\tilde x})\mathbf{\tilde x}^\top \right) $
+            \item $ b = b + \alpha \left(h(\mathbf{x^{(t)}}) - h(\mathbf{\tilde x}) \right) $
+            \item $ c = c + \alpha \left(\mathbf{x^{(t)}} - \mathbf{\tilde x} \right) $
+        \end{itemize}
+    \end{enumerate}
+    \item Go back to step 1 until stopping criterion
+\end{enumerate}
+
+The more steps we use for Gibbs sampling, the lower is the bias of our estimate. However it takes more time to compute. In practice, taking $k=1$ works well to initialize the parameters of the algorithm.
 
 \clearpage
 \section{Implementation and results}
+
+We implemented the RBM training algorithm in python and then we compared our implementation performance with an existing deep learning library using tensorflow (YADLT), we applied it to the MNIST dataset (images of handwritten digits) and CIFAR-10 (color images of different classes). In the case of image data, each pixel is considered as a node; the intensity $p \in [0,1]$ of a pixel is considered as a probability. \\
+
 \subsection{Implementation of RBM on python}
 
 \subsection{Implementation of RBM on tensorflow using a GPU}
 
 We use the implementation in tensorflow provided by Gabriele Angeletti as a library gathering many deep learning models and algorithms such as convolutional networks, RNN, RBM, Deep Belief Networks...
 
+\subsection{Convergence plot}
+% training and validation plots to explain that we avoid overfitting
+
+\subsection{Influence of different algorithm parameters}
+
+\subsubsection{Influence of batch size}
+
+\subsubsection{Influence of number of hidden units}
+
 
 % define the loss we are using
 % compare the loss evolution over epochs while varying parameters 
 % reconstruct hidden layers?
+
+
+\clearpage
+\section{Conclusion and future work}
+
+
 
 \clearpage
 \nocite{*}
