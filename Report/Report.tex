@@ -127,14 +127,81 @@ Recent developments have demonstrated the capacity of RBM to be powerful generat
 
 \section{Theory of RBM}
 
+\subsection{Definition of RBM}
+Restricted Boltzmann Machines are particular instance of undirected graphical models inspired by neural networks, where the units are organized in two layers.
+
+\begin{itemize}
+    \item The visible layer $ \mathbf{x} $ which contains all the visible nodes.
+    \item The hidden layer $ \mathbf{h} $ with all the latent variables.
+\end{itemize}
+
+It is \emph{restricted} because no connections between nodes of the same layer are allowed. Each node of one layer is connected to all the other nodes of the other layer ($h_j \leftrightarrow x_k$). The matrix $W$ characterizes the connections between the two layers: $ W_{j,k} $ is the value for the connection between $h_j$ and $x_k$. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{rbm.png}
+\label{fig:RBM}
+\caption{The network graph of an RBM}
+\end{figure}
+
 \subsection{Energy and probability}
+\label{subsec:energy}
+We introduce the two bias vectors $c$ and $b$ to define the energy of this graph:
+
+\[ E(x,h) = -h^\top W x - c^\top x - b^\top h \]
+
+We can write the joint probability of $ \mathbf{x} $ and $ \mathbf{h} $ as: 
+
+\[ p(x,h) = \frac{1}{Z} \exp(-E(x,h)) \]
+
+$Z$ is the partition parameter which can be computed by calculating all the possibles values of $ \mathbf{x} $  and $ \mathbf{h} $. In practice, this parameter is intractable.
+
+We see that to increase the probability, we want to decrease the energy. We have:
+ 
+\begin{itemize}
+    \item if $c_k < 0$ and $x_k = 1$, the energy is higher; therefore we prefer having $x_k = 0$ (the probability of $x_k = 1$ decreases).
+    \item if $c_k > 0$, similarly, we prefer $x_k = 1$ over $x_k = 0$.
+\end{itemize}
+
+We apply the same arguments for $b$ and $W$ and deduce similar interpretations of theses parameters.
+
+\section{Inference: Conditional inference}
+
+Because $p(x)$ is intractable, the only possible type of inference is computing conditional inference. We will prove that computing the conditional probabilities $p(x|h)$ and $p(h|x)$ is easy.
+
+Because of the construction of the graph, the variables $h_1, \hdots, h_H$ are independant conditionally on $\mathbf{x}$: \[p(h|x) = \prod_j p(h_j|x)\]
+
+We can also prove that given $\mathbf{x}$, $h_j$ follows a Bernoulli:
+
+\[ p(h_j=1|x) = sigm(b_j + W_{j.}x)\]
+
+$ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function: $$sigm(x) = \frac{1}{1+e^{-x}}$$
+
+We can prove that either by derivation of  $p(h|x)$ or by applying the \emph{Local Markov Property}: $p(z_i|z_j, \; j \neq i) =  p(z_i|\mathcal{N}(z_i))$.
+
+\subsection{Free energy}
+
+To have a better understanding of the parametrs $W \;, c \;, b$, let's introduce the concept of free energy. Using a marginalization and some derivations, we can write the probability $p(x)$ as :
+
+\[ p(x) = \sum_h p(x,h) = \exp\left(c^\top x + \sum_{j=1}^H \log\left( 1+\exp(b_j + W_{j.}x) \right) \right) / Z \]
+
+The function $u \mapsto \log\left( 1+\exp(u) \right)$ is called \texttt{softplus} and is a soft approximation of $u \mapsto \max(u,0)$. \\
+
+We can see that $p(x) = \exp\left(-F(x)\right) / Z$ where $F$ is the free energy. We want to increase the probability of our data $x$ and thus decreases its energy. Let's look at each term of this energy:
+
+\begin{itemize}
+    \item As seen in the previous subsection (\ref{subsec:energy}), the sign of $c_k$ impacts wether $x_k$ would be a 0 or 1. Thus, having $c^\top x$ in the probability means that we want $\mathbf{x}$ and the bias $c$ to be aligned. This bias characterizes the probability.
+    \item Similarly, $\mathbf{x}$ and $W_{j.}$ should align for each $j$. And we can see $b_j$ as a control parameter: $W_{j.}x$ has to be big enough to have $b_j + W_{j.}x > 0 $.  Therefors, we can considers the hidden variables as features and $b_j$ the bias for each feature (it defines the importance of each feature). The goal of the RBM is to represent meaningful features.
+\end{itemize}
+
+ 
 
 \subsection{Contrastive divergence theory ...}
 
 
 
-\section{Training RBM on MNIST Data}
-
+\clearpage
+\section{Implementation and results}
 \subsection{Implementation of RBM on python}
 
 \subsection{Implementation of RBM on tensorflow using a GPU}
@@ -146,7 +213,8 @@ We use the implementation in tensorflow provided by Gabriele Angeletti as a libr
 % compare the loss evolution over epochs while varying parameters 
 % reconstruct hidden layers?
 
-
+\clearpage
+\nocite{*}
 \bibliographystyle{plain}
 \bibliography{biblio}
 
