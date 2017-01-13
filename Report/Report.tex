@@ -25,6 +25,7 @@
 % }
 % \author{Chaimaa Kadaoui, Othman Sbai, Xi Shen}
 % \date\today
+
 \documentclass{article}
 \PassOptionsToPackage{numbers, compress}{natbib}
 
@@ -87,7 +88,7 @@
 
 \maketitle
 \section{Abstract}
-For our project in Probabilistic Graphical Models course, we studied the use and the training of Restricted Boltzmann Machines as an instance of undirected graphical models. We mainly base our approach on the practical guide for training Restricted Boltzmann Machines (Hinton 2010~\cite{hinton2010practical}). We start by an introduction to RBM and the interest that they have raised in the last years, then we define the theoretical aspects of main training methods of RBM. Finally we present our results by comparing our implementation of training RBM to an implementation from another deep learning library, on two popular image datasets MNIST and CIFAR. We show convergence results and investigate the influence of differents parameters of the training algorithm.
+For our project in Probabilistic Graphical Models course, we studied the use and the training of Restricted Boltzmann Machines as an instance of undirected graphical models. We mainly base our approach on the practical guide for training Restricted Boltzmann Machines (Hinton 2010~\cite{hinton2010practical}). We start by an introduction to RBM and the interest that they have raised in the last years, then we define the theoretical aspects of main training methods of RBM. Finally we present our results by comparing our implementation of training RBM to an implementation from another deep learning library, on two popular image datasets MNIST and CIFAR-10. We show our convergence results and investigate the influence of different parameters of the training algorithm.
 
 % Here introduction about the place that occupy restricted boltzmann machines currently among deep learning algorithms. Are they used? by whom ? which latest posts and papers? for which interest ? 
 
@@ -104,7 +105,25 @@ A Restricted Boltzmann Machine (RBM) is an undirected energy-based probabilistic
 
 % what about EM algorithm ?
 
-\subsection{Advances of RBM during last decades}
+\subsection{Interest in RBM}
+
+A major interest have been dedicated to directed graphical models with one layer of observed variables and one or more layers of hidden variables such Mixture of Gaussians, probabilistic PCA, factor analysis, latent dirichlet analysis LDA... However, the undirected two layered analogue which was first introduced and called Harmonium by \cite{smolensky1986information} and renamed as "Restricted Boltzmann Machines" by \cite{hinton2002training} have also seen advances through new training methods, which unlike directed graphical models, makes inference and learning very fast. %This last paper from Hinton in 2002, introduces a concept of Product of Experts which multiplies probability distributions of many experts. An RBM is then a PoE with one expert per hidden units
+
+%https://papers.nips.cc/paper/2672-exponential-family-harmoniums-with-an-application-to-information-retrieval.pdf
+%http://www.cs.toronto.edu/~hinton/absps/tr00-004.pdf
+
+\section{Applications of RBM}
+% to be reformulated /.. copied ../
+Restricted Boltzmann machines have successfully been applied to problems involving high dimensional data such as images, text  \cite{hinton2006fast}, \cite{vincent2010stacked} as unsupervised feature extractors.
+
+Recent developments have demonstrated the capacity of RBM to be powerful generative models, able to extract useful features from input data or construct deep artificial neural networks. In this setting they can be seen as good preprocessing or initialization for some other models. They can also be used as self-contained classifiers as shown in \cite{larochelle2012learning}.
+
+\begin{itemize}
+		\item \textbf{RBM as a generative model}: learns and generates samples from data distribution 
+		\item \textbf{RBM as feature extractor}: unsupervised feature extraction from data, instead of handcrafting features 
+		\item \textbf{RBM for computer vision}: such as object recognition, image denoising and inpainting.
+		\item \textbf{RBM for collaborative filtering}: given a set of N users and M movies, we would like to recommend movies to the users.
+	\end{itemize}
 
 \section{Theory of RBM}
 
