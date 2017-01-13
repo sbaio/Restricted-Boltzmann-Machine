@@ -90,14 +90,11 @@
 \section{Abstract}
 For our project in Probabilistic Graphical Models course, we studied the use and the training of Restricted Boltzmann Machines as an instance of undirected graphical models. We mainly base our approach on the practical guide for training Restricted Boltzmann Machines (Hinton 2010~\cite{hinton2010practical}). We start by an introduction to RBM and the interest that they have raised in the last years, then we define the theoretical aspects of main training methods of RBM. Finally we present our results by comparing our implementation of training RBM to an implementation from another deep learning library, on two popular image datasets MNIST and CIFAR-10. We show our convergence results and investigate the influence of different parameters of the training algorithm.
 
-% Here introduction about the place that occupy restricted boltzmann machines currently among deep learning algorithms. Are they used? by whom ? which latest posts and papers? for which interest ? 
 
-% Describe the evolution of the interest in RBM during last decades. 
-% How advances in training techniques lead to better use of RBM, like CD ?
+%-----------------------------------------------
+%	Intro
+%-----------------------------------------------
 
-% why we chose to work on this topic
-
-% Describe the approach of the topic : training RBM
 \section{Introduction}
 \subsection{Definition of an RBM}
 
@@ -107,7 +104,7 @@ A Restricted Boltzmann Machine (RBM) is an undirected energy-based probabilistic
 
 \subsection{Interest in RBM}
 
-A major interest have been dedicated to directed graphical models with one layer of observed variables and one or more layers of hidden variables such Mixture of Gaussians, probabilistic PCA, factor analysis, latent dirichlet analysis LDA... However, the undirected two layered analogue which was first introduced and called Harmonium by \cite{smolensky1986information} and renamed as "Restricted Boltzmann Machines" by \cite{hinton2002training} have also seen advances through new training methods, which unlike directed graphical models, makes inference and learning very fast. %This last paper from Hinton in 2002, introduces a concept of Product of Experts which multiplies probability distributions of many experts. An RBM is then a PoE with one expert per hidden units
+A major interest have been dedicated to directed graphical models with one layer of observed variables and one or more layers of hidden variables such Mixture of Gaussians, probabilistic PCA, factor analysis, latent dirichlet analysis LDA... However, the undirected two layered analogue which was first introduced and called Harmonium by \cite{smolensky1986information} and renamed as "Restricted Boltzmann Machines" by \cite{hinton2002training} have also seen advances through new training methods, which unlike directed graphical models, makes inference and learning very fast. 
 
 %https://papers.nips.cc/paper/2672-exponential-family-harmoniums-with-an-application-to-information-retrieval.pdf
 %http://www.cs.toronto.edu/~hinton/absps/tr00-004.pdf
@@ -122,8 +119,12 @@ Recent developments have demonstrated the capacity of RBM to be powerful generat
 		\item \textbf{RBM as a generative model}: learns and generates samples from data distribution 
 		\item \textbf{RBM as feature extractor}: unsupervised feature extraction from data, instead of handcrafting features 
 		\item \textbf{RBM for computer vision}: such as object recognition, image denoising and inpainting.
-		\item \textbf{RBM for collaborative filtering}: given a set of N users and M movies, we would like to recommend movies to the users.
+		\item \textbf{RBM for collaborative filtering}: given a set of N users and M movies, recommend movies to the users.
 	\end{itemize}
+
+%-----------------------------------------------
+%	Theory of RBM
+%-----------------------------------------------
 
 \section{Theory of RBM}
 
@@ -165,6 +166,10 @@ We see that to increase the probability, we want to decrease the energy. We have
 
 We apply the same arguments for $b$ and $W$ and deduce similar interpretations of theses parameters.
 
+%-----------------------------------------------
+%	Inference
+%-----------------------------------------------
+
 \section{Inference: Conditional inference}
 
 Because $p(x)$ is intractable, the only possible type of inference is computing conditional inference. We will prove that computing the conditional probabilities $p(x|h)$ and $p(h|x)$ is easy.
@@ -194,9 +199,11 @@ We can see that $p(x) = \exp\left(-F(x)\right) / Z$ where $F$ is the free energy
     \item Similarly, $\mathbf{x}$ and $W_{j.}$ should align for each $j$. And we can see $b_j$ as a control parameter: $W_{j.}x$ has to be big enough to have $b_j + W_{j.}x > 0 $.  Therefors, we can considers the hidden variables as features and $b_j$ the bias for each feature (it defines the importance of each feature). The goal of the RBM is to represent meaningful features.
 \end{itemize}
 
- 
+%-----------------------------------------------
+%	Contrastive Divergence
+%-----------------------------------------------
 
-\subsection{Contrastive divergence method for training RBM efficiently}
+\section{Contrastive divergence method for training RBM efficiently}
 
 To train the RBM with our data $\mathbf{x}^{(t)}$, we would like to minimize the average loss:
 
@@ -263,6 +270,12 @@ We do the same to update $b$ and $c$:
 \end{enumerate}
 
 The more steps we use for Gibbs sampling, the lower is the bias of our estimate. However it takes more time to compute. In practice, taking $k=1$ works well to initialize the parameters of the algorithm.
+
+% \subsection*{Persistent Contrastive Divergence}
+
+% The main issue of k-steps Gibbs sampling is that starting from a point $\mathbf{x^{(t)}}$, it won't wander far away from this point so we may miss a point with lower energy. Therefore we might be stuck in a local minimum unless we take a great $k$.
+
+% To allow $\tilde{x}$ to wander further away from the training examples, at each iteration of the algorithm, we initialize the Gibbs sampling with the sample from the previous iteration.
 
 \clearpage
 \section{Implementation and results}
