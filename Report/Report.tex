@@ -1,30 +1,86 @@
-\documentclass[a4paper,10pt]{article}
+% \documentclass[a4paper,10pt]{article}
 
-\usepackage[utf8]{inputenc}
-\usepackage{natbib}
-%\usepackage[vmargin=2cm]{geometry}
-\usepackage{fullpage}
+% \usepackage[utf8]{inputenc}
+% \usepackage{natbib}
+% %\usepackage[vmargin=2cm]{geometry}
+% \usepackage{fullpage}
 
-\setlength{\bibsep}{1pt}
-\usepackage{graphicx}
+% \setlength{\bibsep}{1pt}
+% \usepackage{graphicx}
+% \graphicspath{{Figures/}}
+
+% \usepackage{hyperref}
+% \hypersetup{
+%   colorlinks, linkcolor=red
+% }
+
+% \renewcommand{\bibfont}{\small}
+
+
+% %\title{Project report - Object Recognition and Computer vision}
+% \title{%
+% 	\huge{Training Restricted Boltzmann Machines}\\ \bigbreak
+%   	\Large{Project report}\\ 
+%   	\Large{Probabilistic Graphical Models - MVA}
+% }
+% \author{Chaimaa Kadaoui, Othman Sbai, Xi Shen}
+% \date\today
+\documentclass{article}
+\PassOptionsToPackage{numbers, compress}{natbib}
+
+% if you need to pass options to natbib, use, e.g.:
+% \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading nips_2016
+%
+% to avoid loading the natbib package, add option nonatbib:
+% \usepackage[nonatbib]{nips_2016}
+
+\usepackage[final]{nips_2016}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+% \usepackage[final]{nips_2016}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage[]{amsmath}
+\usepackage[]{graphicx}
+\usepackage[]{float}
 \graphicspath{{Figures/}}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{caption}
+\usepackage{subcaption}
 
-\usepackage{hyperref}
-\hypersetup{
-  colorlinks, linkcolor=red
+
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+\title{Restricted Boltzmann Machines}
+
+% The \author macro works with any number of authors. There are two
+% commands used to separate the names and addresses of multiple
+% authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to
+% break the lines. Using \AND forces a line break at that point. So,
+% if LaTeX puts 3 of 4 authors names on the first line, and the last
+% on the second line, try using \AND instead of \And before the third
+% author name.
+
+\author{
+  Chaimaa Kadaoui  \\
+  \texttt{chaimaa.kadaoui\thanks{mail extension @eleves.enpc.fr for all authors}} \\
+  \And
+  Othman SBAI \\
+  \texttt{othman.sbai} \\
+  \And
+   Xi Shen\\
+  \texttt{xi.shenxi} \\
 }
-
-\renewcommand{\bibfont}{\small}
-
-
-%\title{Project report - Object Recognition and Computer vision}
-\title{%
-	\huge{Training Restricted Boltzmann Machines}\\ \bigbreak
-  	\Large{Project report}\\ 
-  	\Large{Probabilistic Graphical Models - MVA}
-}
-\author{Chaimaa Kadaoui, Othman Sbai, Xi Shen}
-\date\today
 
 
 \begin{document}
@@ -47,6 +103,8 @@ For our project in Probabilistic Graphical Models course, we studied the use and
 A Restricted Boltzmann Machine (RBM) is an undirected energy-based probabilistic graphical model which can be seen as a two layer neural network (visible and hidden units). RBMs can be used to model and learn important aspects of a probability distribution of a training data. They are called restricted, because we impose restrictions on the network topology, by allowing only connections between units of different layers. RBM are energy-based, since they define probability distribution through an energy function. Learning corresponds to shaping the energy so that desirable configurations have a low energy and thus maximize probability of training data under the model. Maximum likelihood learning is challenging for undirected graphical models because MLE parameters cannot be found analytically and the log likelihood gradient based optimization is not tractable. This optimization requires obtaining samples through Markov Chain Monte Carlo, which is computationally demanding.
 
 % what about EM algorithm ?
+
+\subsection{Advances of RBM during last decades}
 
 \section{Theory of RBM}
 
