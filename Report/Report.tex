@@ -2,7 +2,8 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{natbib}
-\usepackage[vmargin=2cm]{geometry}
+%\usepackage[vmargin=2cm]{geometry}
+\usepackage{fullpage}
 
 \setlength{\bibsep}{1pt}
 \usepackage{graphicx}
@@ -29,15 +30,30 @@
 \begin{document}
 
 \maketitle
+\section{Abstract}
+For our project in Probabilistic Graphical Models course, we studied the use and the training of Restricted Boltzmann Machines as an instance of undirected graphical models. We mainly base our approach on the practical guide for training Restricted Boltzmann Machines (Hinton 2010~\cite{hinton2010practical}). We start by an introduction to RBM and the interest that they have raised in the last years, then we define the theoretical aspects of main training methods of RBM. Finally we present our results by comparing our implementation of training RBM to an implementation from another deep learning library, on two popular image datasets MNIST and CIFAR. We show convergence results and investigate the influence of differents parameters of the training algorithm.
 
+% Here introduction about the place that occupy restricted boltzmann machines currently among deep learning algorithms. Are they used? by whom ? which latest posts and papers? for which interest ? 
+
+% Describe the evolution of the interest in RBM during last decades. 
+% How advances in training techniques lead to better use of RBM, like CD ?
+
+% why we chose to work on this topic
+
+% Describe the approach of the topic : training RBM
 \section{Introduction}
+\subsection{Definition of an RBM}
 
-A Restricted Boltzmann Machine (RBM) is a undirected energy-based probabilistic graphical model which can be seen as a two layer neural network (visible and hidden units). RBMs can be used to model and learn important aspects of a probability distribution of a training data. They are called restricted, because we impose restrictions on the network topology, by allowing only connections between units of different layers. RBM are energy-based, since they define probability distribution through an energy function. Learning corresponds to shaping the energy so that desirable configurations have a low energy and thus maximize probability of training data under the model. Maximum likelihood learning is challenging for undirected graphical models because MLE parameters cannot be found analytically and the log likelihood gradient based optimization is not tractable. This optimization requires obtaining samples through Markov Chain Monte Carlo, which is computationally demanding.
+A Restricted Boltzmann Machine (RBM) is an undirected energy-based probabilistic graphical model which can be seen as a two layer neural network (visible and hidden units). RBMs can be used to model and learn important aspects of a probability distribution of a training data. They are called restricted, because we impose restrictions on the network topology, by allowing only connections between units of different layers. RBM are energy-based, since they define probability distribution through an energy function. Learning corresponds to shaping the energy so that desirable configurations have a low energy and thus maximize probability of training data under the model. Maximum likelihood learning is challenging for undirected graphical models because MLE parameters cannot be found analytically and the log likelihood gradient based optimization is not tractable. This optimization requires obtaining samples through Markov Chain Monte Carlo, which is computationally demanding.
 
+% what about EM algorithm ?
 
-\section{Approach of the project}
+\section{Theory of RBM}
 
-\cite{hinton2010practical},\cite{tieleman2008training},\cite{fischer2014training}
+\subsection{Energy and probability}
+
+\subsection{Contrastive divergence theory ...}
+
 
 
 \section{Training RBM on MNIST Data}
@@ -59,3 +75,8 @@ We use the implementation in tensorflow provided by Gabriele Angeletti as a libr
 
 
 \end{document}
+
+
+
+% overfitting ?
+% convergence ?
