@@ -305,26 +305,26 @@ In general, it is difficult to directly evaluate the performances of RBM. This i
 \subsubsection{Influence of batch size}
 \label{subsubsec:BS}
 
-The figure \ref{batch} shows the performance of RBM with different batch sizes. We can see that we have better results for smaller batch sizes. In fact, even though increasing the batch size leads to better gradient estimate, it tends to decrease the weight updates per gradient evaluation. For example, for 500 images, at each epoch we would have 25 updates for a batch size of 20 while we would have only 5 updates for a batch size of 100. On the other side, the computation time is more important with small batch sizes.
+The figure \ref{fig:batch} shows the performance of RBM with different batch sizes. We can see that we have better results for smaller batch sizes. In fact, even though increasing the batch size leads to better gradient estimate, it tends to decrease the weight updates per gradient evaluation. For example, for 500 images, at each epoch we would have 25 updates for a batch size of 20 while we would have only 5 updates for a batch size of 100. On the other side, the computation time is more important with small batch sizes.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{batchsize}
-\label{batch}
 \caption{$\lvert \mathbf{x} - \mathbf{x'} \rvert$ for different batch sizes}
+\label{fig:batch}
 \end{figure}
 
 \subsubsection{Influence of number of hidden units}
 
-As we can see in the figure \ref{hidden}, the number of hidden units has a direct impact on the performance of the algorithm. By increasing the number of hidden units, we can decrease the average stochastic reconstruction. In the figure, we can see that clearly 100 hidden units isn't enough; however for bigger values the curves become closer. 
+As we can see in the figure \ref{fig:hidden}, the number of hidden units has a direct impact on the performance of the algorithm. By increasing the number of hidden units, we can decrease the average stochastic reconstruction. In the figure, we can see that clearly 100 hidden units isn't enough; however for bigger values the curves become closer. 
 
 Since we deal with high dimensional data (images of abouts 1000 pixels each), we don't risk overfitting with a number of hidden units between 100 and 500 (the valiation loss is still below the training loss in each case). Hence, our main constraint for the choice of this parameter was the time complexity. We found that 200 or 300 was a good compromise between computing time and performances.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{hidden_units}
-\label{hidden}
 \caption{$\lvert \mathbf{x} - \mathbf{x'} \rvert$ for different number of hidden units}
+\label{fig:hidden}
 \end{figure}
 
 % define the loss we are using
