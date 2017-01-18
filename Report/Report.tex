@@ -346,6 +346,11 @@ In general, using more steps for the Gibbs sampling doesn't influence much the b
 \clearpage
 \section{Conclusion and future work}
 
+As for other deep learning techniques, RBM implementations are costly. Hence, the use of GPU achitectures is necessary for fast computation time. Moreover, the algorithm doesn't need to converge: even for 100 epochs, we could extract meaningful results from the algorithm. For high dimensional data such as images, we can avoid overfitting by choosing optimal parameters.
+
+There are many alternatives to the RBM studied in this project. For example, we can use what is called Persistent Contrastive Divergence: at each iteration of the algorithm, we initialize the Gibbs sampling with the sample from the previous iteration. This method allows us to minimize the risk of falling into a local minima.
+
+Furthermore, it is possible to adapt the RBM model for different types of data. In the case of multi-class data, instead of a Bernoulli, the data can follow a Multinomial probability. For unbounded reals, we can add a quadratic term ($\frac{1}{2}\mathbf{x}^\top \mathbf{x}$) to the energy. Then, $p(\mathbf{x}|h)$ becomes a Gaussian distribution. However, this model is less stable.
 
 
 \clearpage
