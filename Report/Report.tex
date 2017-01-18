@@ -79,13 +79,13 @@
 
 \author{
   Chaimaa Kadaoui  \\
-  \texttt{chaimaa.kadaoui\thanks{mail extension @eleves.enpc.fr for all authors}} \\
+  \texttt{chaimaa.kadaoui\thanks{mail extension @ens-paris-saclay.fr for all authors}} \\
   \And
   Othman SBAI \\
-  \texttt{othman.sbai} \\
+  \texttt{othman.sbai$^*$} \\
   \And
    Xi Shen\\
-  \texttt{xi.shenxi} \\
+  \texttt{xi.shen$^*$} \\
 }
 
 
@@ -109,14 +109,14 @@ A Restricted Boltzmann Machine (RBM) is an undirected energy-based probabilistic
 
 \subsection{Interest in RBM}
 
-A major interest have been dedicated to directed graphical models with one layer of observed variables and one or more layers of hidden variables such Mixture of Gaussians, probabilistic PCA, factor analysis, latent dirichlet analysis LDA... However, the undirected two layered analogue which was first introduced and called Harmonium by \cite{smolensky1986information} and renamed as "Restricted Boltzmann Machines" by \cite{hinton2002training} have also seen advances through new training methods, which unlike directed graphical models, makes inference and learning very fast. 
+A major interest have been dedicated to directed graphical models with one layer of observed variables and one or more layers of hidden variables such Mixture of Gaussians, probabilistic PCA, factor analysis, latent dirichlet analysis LDA... However, the undirected two layered analogue which was first introduced and called Harmonium by Smolensky P. \cite{smolensky1986information} and renamed as "Restricted Boltzmann Machines" by Hinton G. \cite{hinton2002training} have also seen advances through new training methods, which unlike directed graphical models, makes inference and learning very fast. 
 
 %https://papers.nips.cc/paper/2672-exponential-family-harmoniums-with-an-application-to-information-retrieval.pdf
 %http://www.cs.toronto.edu/~hinton/absps/tr00-004.pdf
 
-\section{Applications of RBM}
+\subsection{Applications of RBM}
 % to be reformulated /.. copied ../
-Restricted Boltzmann machines have successfully been applied to problems involving high dimensional data such as images, text  \cite{hinton2006fast}, \cite{vincent2010stacked} as unsupervised feature extractors.
+Restricted Boltzmann machines have successfully been applied to problems involving high dimensional data such as images, text  \cite{hinton2006fast}, and as unsupervised feature extractors \cite{vincent2010stacked}.
 
 Recent developments have demonstrated the capacity of RBM to be powerful generative models, able to extract useful features from input data or construct deep artificial neural networks. In this setting they can be seen as good preprocessing or initialization for some other models. They can also be used as self-contained classifiers as shown in \cite{larochelle2012learning}.
 
@@ -133,15 +133,7 @@ Recent developments have demonstrated the capacity of RBM to be powerful generat
 
 \section{Theory of RBM}
 
-\subsection{Definition of RBM}
-Restricted Boltzmann Machines are particular instance of undirected graphical models inspired by neural networks, where the units are organized in two layers.
-
-\begin{itemize}
-    \item The visible layer $ \mathbf{x} $ which contains all the visible nodes.
-    \item The hidden layer $ \mathbf{h} $ with all the latent variables.
-\end{itemize}
-
-It is \emph{restricted} because no connections between nodes of the same layer are allowed. Each node of one layer is connected to all the other nodes of the other layer ($h_j \leftrightarrow x_k$). The matrix $W$ characterizes the connections between the two layers: $ W_{j,k} $ is the value for the connection between $h_j$ and $x_k$. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary.
+We can represent the graphical model of RBM with the schema in the figure \ref{fig:RBM}. 
 
 \begin{figure}
 \centering
@@ -149,6 +141,8 @@ It is \emph{restricted} because no connections between nodes of the same layer a
 \label{fig:RBM}
 \caption{The network graph of an RBM}
 \end{figure}
+
+This model is called \emph{restricted} because no connections between nodes of the same layer are allowed. Each node of one layer is connected to all the other nodes of the other layer ($h_j \leftrightarrow x_k$). The matrix $W$ characterizes the connections between the two layers: $ W_{j,k} $ is the value for the connection between $h_j$ and $x_k$. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary.
 
 \subsection{Energy and probability}
 \label{subsec:energy}
@@ -169,13 +163,13 @@ We see that to increase the probability, we want to decrease the energy. We have
     \item if $c_k > 0$, similarly, we prefer $x_k = 1$ over $x_k = 0$.
 \end{itemize}
 
-We apply the same arguments for $b$ and $W$ and deduce similar interpretations of theses parameters.
+We can dedude similar intepretations for $b$ and $W$.
 
 %-----------------------------------------------
 %	Inference
 %-----------------------------------------------
 
-\section{Inference: Conditional inference}
+\subsection{Inference: Conditional inference}
 
 Because $p(x)$ is intractable, the only possible type of inference is computing conditional inference. We will prove that computing the conditional probabilities $p(x|h)$ and $p(h|x)$ is easy.
 
@@ -187,21 +181,21 @@ We can also prove that given $\mathbf{x}$, $h_j$ follows a Bernoulli:
 
 $ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function: $$sigm(x) = \frac{1}{1+e^{-x}}$$
 
-We can prove that either by derivation of  $p(h|x)$ or by applying the \emph{Local Markov Property}: $p(z_i|z_j, \; j \neq i) =  p(z_i|\mathcal{N}(z_i))$.
+We can prove that either by derivation of  $p(h|x)$ or by applying the \emph{Local Markov Property}: $p(z_i|z_j, \; j \neq i) =  p(z_i|\mathcal{N}(z_i))$. $\mathcal{N}(z_i)$ are the neighbors of $z_i$.
 
 \subsection{Free energy}
 
-To have a better understanding of the parametrs $W \;, c \;, b$, let's introduce the concept of free energy. Using a marginalization and some derivations, we can write the probability $p(x)$ as :
+To have a better understanding of the parameters $W,\; c,\; b$, let's introduce the concept of free energy. Using a marginalization and some derivations, we can write the probability $p(x)$ as :
 
 \[ p(x) = \sum_h p(x,h) = \exp\left(c^\top x + \sum_{j=1}^H \log\left( 1+\exp(b_j + W_{j.}x) \right) \right) / Z \]
 
 The function $u \mapsto \log\left( 1+\exp(u) \right)$ is called \texttt{softplus} and is a soft approximation of $u \mapsto \max(u,0)$. \\
 
-We can see that $p(x) = \exp\left(-F(x)\right) / Z$ where $F$ is the free energy. We want to increase the probability of our data $x$ and thus decreases its energy. Let's look at each term of this energy:
+We can see that $p(x) = \exp\left(-F(x)\right) / Z$ where $F$ is called the free energy. We want to increase the probability of our data $x$ and thus decreases its energy. Let's look at each term of this energy:
 
 \begin{itemize}
     \item As seen in the previous subsection (\ref{subsec:energy}), the sign of $c_k$ impacts wether $x_k$ would be a 0 or 1. Thus, having $c^\top x$ in the probability means that we want $\mathbf{x}$ and the bias $c$ to be aligned. This bias characterizes the probability.
-    \item Similarly, $\mathbf{x}$ and $W_{j.}$ should align for each $j$. And we can see $b_j$ as a control parameter: $W_{j.}x$ has to be big enough to have $b_j + W_{j.}x > 0 $.  Therefors, we can considers the hidden variables as features and $b_j$ the bias for each feature (it defines the importance of each feature). The goal of the RBM is to represent meaningful features.
+    \item Similarly, $\mathbf{x}$ and $W_{j.}$ should align for each $j$. And we can see $b_j$ as a control parameter: $W_{j.}x$ has to be big enough to have $b_j + W_{j.}x > 0 $.  Therefore, we can consider the hidden variables as features and $b_j$ the bias for each feature (it defines the importance of each feature). The goal of the RBM is to represent meaningful features.
 \end{itemize}
 
 %-----------------------------------------------
@@ -246,7 +240,7 @@ We define for a given $x$, the vector $h(x)$ as:
 
 $$ h(x) = sigm(b + Wx) $$
 
-Let's look at the derivative of the energy $E$ with respect to $W$, we can prove that:
+Let's look at the derivative of the energy $E$ with respect to $W$. We can prove that:
 
 \[ \nabla_{\mathbf{W}} E(x,h) = -h(x) x^\top \]
 
@@ -258,7 +252,7 @@ We do the same to update $b$ and $c$:
 
 \[ b = b + \alpha \left(h(\mathbf{x^{(t)}}) - h(\mathbf{\tilde x}) \right)  ~~~~~~~~~,~~~~~~~~~ c = c + \alpha \left(\mathbf{x^{(t)}} - \mathbf{\tilde x} \right)\]
 
-%\[  \]
+Then, the pseudo-code of the algorithm is as follow:
 
 \begin{enumerate}
     \item For each $\mathbf{x^{(t)}}$
