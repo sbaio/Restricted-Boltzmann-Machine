@@ -298,7 +298,7 @@ We use the implementation in tensorflow and python provided by Gabriele Angelett
 
 \subsection{Convergence plot}
 
-In general, it is difficult to directly evaluate the performances of RBM. This is due to the fact that the parameter $Z$ is intractable and we are unable to compute the average loss. One way to monitor the behavior of the algorithm is to calculate at each step the average stochastic reconstruction which corresponds to the euclidean distance between the samples generated with Gibbs sampling and our data: $\lvert \mathbf{x} - \mathbf{x'} \rvert$.
+In general, it is difficult to directly evaluate the performance of RBM. This is due to the fact that the parameter $Z$ is intractable and we are unable to compute the log-likelihood. One way to monitor the behavior of the algorithm is to calculate at each step the average stochastic reconstruction which corresponds to the euclidean distance between the samples generated with Gibbs sampling and our data: $\lvert \mathbf{x} - \mathbf{x'} \rvert$.
 
 \subsection{Influence of different algorithm parameters}
 
