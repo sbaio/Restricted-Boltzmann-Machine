@@ -289,12 +289,12 @@ We implemented the RBM training algorithm in python (Github repository available
 
 \subsection{Implementation of RBM in python}
 
-The implementation of RBM training consists of implementing the constrastive divergence learning strategy through Gibbs sampling.
-
+The implementation of RBM training consists of implementing the constrastive divergence learning strategy through Gibbs sampling. We only needed few steps of Contrastrive divergence for a good training. We compare the difference between using different values of k steps for CD-k algorithm \ref{subsubsec:CDk}.
+We also used mini batches during training in order to compute the approximate gradient in every step. The influence of the batch size is studied in subsection \ref{subsubsec:BS}.
 
 \subsection{Implementation of RBM in tensorflow using a GPU}
 
-We use the implementation in tensorflow provided by Gabriele Angeletti as a library gathering many deep learning models and algorithms such as convolutional networks, RNN, RBM, Deep Belief Networks...
+We use the implementation in tensorflow and python provided by Gabriele Angeletti as a library gathering many deep learning models and algorithms such as convolutional networks, RNN, RBM, Deep Belief Networks... We observe the difference in training time between the two implementations. The difference is not very important because of small batch size, and small matrices size in multiplication \cite{fatahalian2004understanding}: 25 seconds for training 1 epoch on GPU with batch size of 10 versus 35 to 40 seconds with our CPU implementation using numpy. 
 
 \subsection{Convergence plot}
 
@@ -303,6 +303,7 @@ In general, it is difficult to directly evaluate the performances of RBM. This i
 \subsection{Influence of different algorithm parameters}
 
 \subsubsection{Influence of batch size}
+\label{subsubsec:BS}
 
 \subsubsection{Influence of number of hidden units}
 
@@ -320,7 +321,8 @@ Since we deal with high dimensional data (images of abouts 1000 pixels each), we
 % define the loss we are using
 % compare the loss evolution over epochs while varying parameters 
 % reconstruct hidden layers?
-
+\subsubsection{Influence of number of steps in contrastive divergence algorithm}
+\label{subsubsec:CDk}
 
 \clearpage
 \section{Conclusion and future work}
