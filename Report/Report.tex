@@ -298,28 +298,49 @@ We use the implementation in tensorflow provided by Gabriele Angeletti as a libr
 
 \subsection{Convergence plot}
 
-In general, it is difficult to directly evaluate the performances of RBM. This is due to the fact that the parameter $Z$ is intractable and we are unable to compute the average loss. A solution 
+In general, it is difficult to directly evaluate the performances of RBM. This is due to the fact that the parameter $Z$ is intractable and we are unable to compute the average loss. One way to monitor the behavior of the algorithm is to calculate at each step the average stochastic reconstruction which corresponds to the euclidean distance between the samples generated with Gibbs sampling and our data: $\lvert \mathbf{x} - \mathbf{x'} \rvert$.
 
 \subsection{Influence of different algorithm parameters}
 
 \subsubsection{Influence of batch size}
 
+The figure \ref{batch} shows the performance of RBM with different batch sizes. We can see that we have better results for smaller batch sizes. In fact, even though increasing the batch size leads to better gradient estimate, it tends to decrease the weight updates per gradient evaluation. For example, for 500 images, at each epoch we would have 25 updates for a batch size of 20 while we would have only 5 updates for a batch size of 100. On the other side, the computation time is more important with small batch sizes.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]{batchsize}
+\label{batch}
+\caption{$\lvert \mathbf{x} - \mathbf{x'} \rvert$ for different batch sizes}
+\end{figure}
+
 \subsubsection{Influence of number of hidden units}
 
-As we can see in the figure \ref{fig:hidden}, the number of hidden units has a direct impact on the performance of the algorithm. By increasing the number of hidden units, we can decrease the average stochastic reconstruction. In the figure, we can see that clearly 100 hidden units isn't enough; however for bigger values the curves become closer. 
+As we can see in the figure \ref{hidden}, the number of hidden units has a direct impact on the performance of the algorithm. By increasing the number of hidden units, we can decrease the average stochastic reconstruction. In the figure, we can see that clearly 100 hidden units isn't enough; however for bigger values the curves become closer. 
 
 Since we deal with high dimensional data (images of abouts 1000 pixels each), we don't risk overfitting with a number of hidden units between 100 and 500 (the valiation loss is still below the training loss in each case). Hence, our main constraint for the choice of this parameter was the time complexity. We found that 200 or 300 was a good compromise between computing time and performances.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{hidden_units}
-\label{fig:hidden}
-\caption{Influence of the number of hidden units}
+\label{hidden}
+\caption{$\lvert \mathbf{x} - \mathbf{x'} \rvert$ for different number of hidden units}
 \end{figure}
 
 % define the loss we are using
 % compare the loss evolution over epochs while varying parameters 
 % reconstruct hidden layers?
+
+\subsubsection{Influence of the steps of Gibbs sampling}
+
+In general, using more steps for the Gibbs sampling doesn't influence much the behavior of the algorithm. The figure \ref{CD} resumes our results for different choices of this parameter. We can see in the zoom that we have better performances for greater number of steps but the improvement is negligible.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.49\textwidth]{CD}
+\includegraphics[width=0.49\textwidth]{CD_zoom}
+\label{CD}
+\caption{$\lvert \mathbf{x} - \mathbf{x'} \rvert$ for different number of Gibbs samling's steps. The right figure is a zoom of the left figure.}
+\end{figure}
 
 
 \clearpage
