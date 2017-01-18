@@ -43,7 +43,11 @@
 
 \usepackage[utf8]{inputenc} % allow utf-8 input
 \usepackage[T1]{fontenc}    % use 8-bit T1 fonts
-\usepackage{hyperref}       % hyperlinks
+\usepackage[colorlinks=false]{hyperref}       % hyperlinks
+% \hypersetup{
+%     colorlinks = false,
+%     linkbordercolor = {white},
+% }
 \usepackage{url}            % simple URL typesetting
 \usepackage{booktabs}       % professional-quality tables
 \usepackage{amsfonts}       % blackboard math symbols
@@ -280,11 +284,14 @@ The more steps we use for Gibbs sampling, the lower is the bias of our estimate.
 \clearpage
 \section{Implementation and results}
 
-We implemented the RBM training algorithm in python and then we compared our implementation performance with an existing deep learning library using tensorflow (YADLT), we applied it to the MNIST dataset (images of handwritten digits) and CIFAR-10 (color images of different classes). In the case of image data, each pixel is considered as a node; the intensity $p \in [0,1]$ of a pixel is considered as a probability. \\
+We implemented the RBM training algorithm in python (Github repository available at \footnote{https://github.com/sbaio/Restricted-Boltzmann-Machine}) and then we compared our implementation performance with an existing deep learning library using tensorflow (YADLT \cite{yadltGithub}), we applied it to the MNIST dataset (images of handwritten digits) and CIFAR-10 (color images of different classes). In the case of image data, each pixel is considered as a node; the intensity $p \in [0,1]$ of a pixel is considered as a probability. \\
 
-\subsection{Implementation of RBM on python}
+\subsection{Implementation of RBM in python}
 
-\subsection{Implementation of RBM on tensorflow using a GPU}
+The implementation of RBM training consists of implementing the constrastive divergence learning strategy through Gibbs sampling.
+
+
+\subsection{Implementation of RBM in tensorflow using a GPU}
 
 We use the implementation in tensorflow provided by Gabriele Angeletti as a library gathering many deep learning models and algorithms such as convolutional networks, RNN, RBM, Deep Belief Networks...
 
