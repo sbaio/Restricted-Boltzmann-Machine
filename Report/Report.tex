@@ -138,21 +138,21 @@ We can represent the graphical model of RBM with the schema in the figure \ref{f
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{rbm.png}
-\label{fig:RBM}
 \caption{The network graph of an RBM}
+\label{fig:RBM}
 \end{figure}
 
 This model is called \emph{restricted} because no connections between nodes of the same layer are allowed. Each node of one layer is connected to all the other nodes of the other layer ($h_j \leftrightarrow x_k$). The matrix $W$ characterizes the connections between the two layers: $ W_{j,k} $ is the value for the connection between $h_j$ and $x_k$. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary.
 
 \subsection{Energy and probability}
 \label{subsec:energy}
-We introduce the two bias vectors $c$ and $b$ to define the energy of this graph:
+We introduce the two bias vectors $c$ and $b$ to define the energy of this graph and the joint probability of $ \mathbf{x} $ and $ \mathbf{h} $:
 
-\[ E(x,h) = -h^\top W x - c^\top x - b^\top h \]
+$$ E(x,h) = -h^\top W x - c^\top x - b^\top h ~~~~~~,~~~~~~ p(x,h) = \frac{1}{Z} \exp(-E(x,h)) $$
 
-We can write the joint probability of $ \mathbf{x} $ and $ \mathbf{h} $ as: 
+%We can write the joint probability of $ \mathbf{x} $ and $ \mathbf{h} $ as: 
 
-\[ p(x,h) = \frac{1}{Z} \exp(-E(x,h)) \]
+
 
 $Z$ is the partition parameter which can be computed by calculating all the possibles values of $ \mathbf{x} $  and $ \mathbf{h} $. In practice, this parameter is intractable.
 
@@ -177,9 +177,9 @@ Because of the construction of the graph, the variables $h_1, \hdots, h_H$ are i
 
 We can also prove that given $\mathbf{x}$, $h_j$ follows a Bernoulli:
 
-\[ p(h_j=1|x) = sigm(b_j + W_{j.}x)\]
+\[ p(h_j=1|x) = sigm(b_j + W_{j.}x) ~~~~~~ \text{with } ~~~~~~~~  sigm(x) = \frac{1}{1+e^{-x}} \]
 
-$ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function: $$sigm(x) = \frac{1}{1+e^{-x}}$$
+%$ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function: $$sigm(x) = \frac{1}{1+e^{-x}}$$
 
 We can prove that either by derivation of  $p(h|x)$ or by applying the \emph{Local Markov Property}: $p(z_i|z_j, \; j \neq i) =  p(z_i|\mathcal{N}(z_i))$. $\mathcal{N}(z_i)$ are the neighbors of $z_i$.
 
@@ -221,54 +221,33 @@ The first term is called the \emph{positive phase} and the second term the {nega
 \end{enumerate}
 
 Therefore we can rewrite each term as:
-
-\[ \mathbb{E}_h \left[ \frac{\partial E(\mathbf{x}^{(t)} ,h)}{\partial \theta} | \mathbf{x}^{(t)} \right] \simeq \frac{\partial E(\mathbf{x}^{(t)} ,h(\mathbf{x}^{(t)}))}{\partial \theta} \]
-
-\[ \mathbb{E}_{x,h} \left[ \frac{\partial E(\mathbf{x} ,h)}{\partial \theta} \right] \simeq \frac{\partial E(\mathbf{\tilde x} ,h(\mathbf{\tilde x}))}{\partial \theta} \]
+$$ \mathbb{E}_h \left[ \frac{\partial E(\mathbf{x}^{(t)} ,h)}{\partial \theta} | \mathbf{x}^{(t)} \right] \simeq \frac{\partial E(\mathbf{x}^{(t)} ,h(\mathbf{x}^{(t)}))}{\partial \theta} ~~~~,~~~~ \mathbb{E}_{x,h} \left[ \frac{\partial E(\mathbf{x} ,h)}{\partial \theta} \right] \simeq \frac{\partial E(\mathbf{\tilde x} ,h(\mathbf{\tilde x}))}{\partial \theta} $$
 
 The goal is to minimize the energy of our training data and to increase the energy of our samplings at each iteration until we have samplings similar to our training data.
 
 We define for a given $x$, the vector $h(x)$ as:
 
-\[ h(x) =
+$$ h(x) =
 \begin{bmatrix}
     p(h_1 = 1 | x)  \\
     \vdots \\
     p(h_H = 1 | x)
 \end{bmatrix}
-\]
+~~~~,~~~~ h(x) = sigm(b + Wx) $$
 
-$$ h(x) = sigm(b + Wx) $$
+%Let's look at the derivative of the energy $E$ with respect to $W$. We can prove that:
+Looking at the derivative of the energy w.r.t the parameters $W, ~ b,~c$ we prove that:
 
-Let's look at the derivative of the energy $E$ with respect to $W$. We can prove that:
+%\[ \nabla_{\mathbf{W}} E(x,h) = -h(x) x^\top \]
 
-\[ \nabla_{\mathbf{W}} E(x,h) = -h(x) x^\top \]
-
-Therefore, we can update $W$ ($\alpha$ is the step of the gradient descent):
+%Therefore, we can update $W$ ($\alpha$ is the step of the gradient descent):
 
 \[ W = W + \alpha \left( h(\mathbf{x^{(t)}})\mathbf{x^{(t)}}^\top - h(\mathbf{\tilde x})\mathbf{\tilde x}^\top \right) \]
 
-We do the same to update $b$ and $c$:
+%We do the same to update $b$ and $c$:
 
 \[ b = b + \alpha \left(h(\mathbf{x^{(t)}}) - h(\mathbf{\tilde x}) \right)  ~~~~~~~~~,~~~~~~~~~ c = c + \alpha \left(\mathbf{x^{(t)}} - \mathbf{\tilde x} \right)\]
 
-Then, the pseudo-code of the algorithm is as follow:
-
-\begin{enumerate}
-    \item For each $\mathbf{x^{(t)}}$
-    \begin{enumerate}
-        \item Generate sample $ \tilde{\mathbf{x}} $ using $ k $ steps Gibbs sampling starting at $\mathbf{x^{(t)}}$
-        \item Update parameters:
-        \begin{itemize}
-            \item $ W = W + \alpha \left( h(\mathbf{x^{(t)}})\mathbf{x^{(t)}}^\top - h(\mathbf{\tilde x})\mathbf{\tilde x}^\top \right) $
-            \item $ b = b + \alpha \left(h(\mathbf{x^{(t)}}) - h(\mathbf{\tilde x}) \right) $
-            \item $ c = c + \alpha \left(\mathbf{x^{(t)}} - \mathbf{\tilde x} \right) $
-        \end{itemize}
-    \end{enumerate}
-    \item Go back to step 1 until stopping criterion
-\end{enumerate}
-
-The more steps we use for Gibbs sampling, the lower is the bias of our estimate. However it takes more time to compute. In practice, taking $k=1$ works well to initialize the parameters of the algorithm.
 
 % \subsection*{Persistent Contrastive Divergence}
 
@@ -276,7 +255,6 @@ The more steps we use for Gibbs sampling, the lower is the bias of our estimate.
 
 % To allow $\tilde{x}$ to wander further away from the training examples, at each iteration of the algorithm, we initialize the Gibbs sampling with the sample from the previous iteration.
 
-\clearpage
 \section{Implementation and results}
 
 We implemented the RBM training algorithm in python (Github repository available at \footnote{https://github.com/sbaio/Restricted-Boltzmann-Machine}) and then we compared our implementation performance with an existing deep learning library using tensorflow (YADLT \cite{yadltGithub}), we applied it to the MNIST dataset (images of handwritten digits) and CIFAR-10 (color images of different classes). In the case of image data, each pixel is considered as a node; the intensity $p \in [0,1]$ of a pixel is considered as a probability. \\
@@ -297,7 +275,8 @@ We show the filters obtained after 20 epochs in the figure~\ref{fig:filters}
 
 \subsection{Convergence plot}
 
-In general, it is difficult to directly evaluate the performance of RBM. This is due to the fact that the parameter $Z$ is intractable and we are unable to compute the log-likelihood. One way to monitor the behavior of the algorithm is to calculate at each step the average stochastic reconstruction which corresponds to the euclidean distance between the samples generated with Gibbs sampling and our data: $\lvert \mathbf{x} - \mathbf{x'} \rvert$.
+In general, it is difficult to directly evaluate the performance of RBM. This is due to the fact that the parameter $Z$ is intractable and we are unable to compute the log-likelihood. One way to monitor the behavior of the algorithm is to calculate at each step the average stochastic reconstruction which corresponds to the euclidean distance between the samples generated with Gibbs sampling and our data: $\lvert \mathbf{x} - \mathbf{x'} \rvert$. 
+When performing the training we make sure that we do not overfit by checking that the validation error is continuously decreasing for different values of the parameters studied.
 
 \subsection{Influence of different algorithm parameters}
 
@@ -313,7 +292,6 @@ The figure \ref{fig:batch} shows the performance of RBM with different batch siz
 As we can see in the figure \ref{fig:hidden}, the number of hidden units has a direct impact on the performance of the algorithm. By increasing the number of hidden units, we can decrease the average stochastic reconstruction. In the figure, we can see that clearly 100 hidden units isn't enough; however for bigger values the curves become closer. 
 
 Since we deal with high dimensional data (images of abouts 1000 pixels each), we don't risk overfitting with a number of hidden units between 100 and 500 (the valiation loss is still below the training loss in each case). Hence, our main constraint for the choice of this parameter was the time complexity. We found that 200 or 300 was a good compromise between computing time and performances.
-
 
 
 % define the loss we are using
@@ -368,18 +346,19 @@ In general, using more steps for the Gibbs sampling doesn't influence much the b
 \centering
 \includegraphics[width=0.45\textwidth]{MNIST_Filter_20Epochs}
 \includegraphics[width=0.45\textwidth]{CIFAR_LearnedWeights}
-\caption{Filters obtained: Left for MNIST dataset, right for CIFAR-10 dataset.}
+\caption{Filters obtained after 20 epochs: Left for MNIST dataset, right for CIFAR-10 dataset.}
 \label{fig:filters}
 \end{figure}
 
 
 \section{Conclusion and future work}
 
-As for other deep learning techniques, RBM implementations are costly. Hence, the use of GPU achitectures is necessary for fast computation time. Moreover, even for 100 epochs, we could extract meaningful results from the algorithm. For high dimensional data such as images, we can avoid overfitting by choosing optimal parameters.
+As for other deep learning techniques, RBM implementations are costly. Hence, the use of GPU achitectures is necessary for fast computation time. Moreover, even for 20 epochs, we could extract meaningful features from the algorithm which can serve for classification for example. For high dimensional data such as images, we can avoid overfitting by choosing optimal hyperparameters. By stacking RBMs into Deep Belief Nets, as specified in \cite{hinton2006fast}, we can benefit from the feature extraction capability at different levels and achieve even better classification results.
 
-There are many alternatives to the RBM studied in this project. For example, we can use what is called Persistent Contrastive Divergence: at each iteration of the algorithm, we initialize the Gibbs sampling with the sample from the previous iteration. This method allows us to minimize the risk of falling into a local minima.
+There are many alternatives to the RBM training techniques studied in this project. For example, we can use Persistent Contrastive Divergence \cite{hinton2010practical} where a set of samples drawn from the model distribution is maintained at each update of the model, it works generally better than CD-1.
+%at each iteration of the algorithm, we initialize the Gibbs sampling with the sample from the previous iteration. %This method allows us to minimize the risk of falling into a local minima.
 
-Furthermore, it is possible to adapt the RBM model for different types of data. In the case of multi-class data, instead of a Bernoulli, the data can follow a Multinomial probability. For unbounded reals, we can add a quadratic term ($\frac{1}{2}\mathbf{x}^\top \mathbf{x}$) to the energy. Then, $p(\mathbf{x}|h)$ becomes a Gaussian distribution. However, this model is less stable.
+Furthermore, it is possible to adapt the RBM model for different types of data. In the case of multi-class data, instead of a Bernoulli, the data can follow a Multinomial probability. For unbounded reals, we can add a quadratic term ($\frac{1}{2}\mathbf{x}^\top \mathbf{x}$) to the energy. Then, $p(\mathbf{x}|h)$ becomes a Gaussian distribution.% but this model is less stable.
 
 
 \clearpage
