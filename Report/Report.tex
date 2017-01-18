@@ -292,9 +292,14 @@ We implemented the RBM training algorithm in python (Github repository available
 The implementation of RBM training consists of implementing the constrastive divergence learning strategy through Gibbs sampling. We only needed few steps of Contrastrive divergence for a good training. We compare the difference between using different values of k steps for CD-k algorithm \ref{subsubsec:CDk}.
 We also used mini batches during training in order to compute the approximate gradient in every step. The influence of the batch size is studied in subsection \ref{subsubsec:BS}.
 
+We show the images reconstructed by the learned model starting from samples from each dataset in the figure ~\ref{fig:reconstructSample}.
+
+
 \subsection{Implementation of RBM in tensorflow using a GPU}
 
 We use the implementation in tensorflow and python provided by Gabriele Angeletti as a library gathering many deep learning models and algorithms such as convolutional networks, RNN, RBM, Deep Belief Networks... We observe the difference in training time between the two implementations. The difference is not very important because of small batch size, and small matrices size in multiplication \cite{fatahalian2004understanding}: 25 seconds for training 1 epoch on GPU with batch size of 10 versus 35 to 40 seconds with our CPU implementation using numpy. 
+
+We show the filters obtained after 20 epochs in the figure~\ref{fig:filters}
 
 \subsection{Convergence plot}
 
@@ -307,12 +312,7 @@ In general, it is difficult to directly evaluate the performance of RBM. This is
 
 The figure \ref{fig:batch} shows the performance of RBM with different batch sizes. We can see that we have better results for smaller batch sizes. In fact, even though increasing the batch size leads to better gradient estimate, it tends to decrease the weight updates per gradient evaluation. For example, for 500 images, at each epoch we would have 25 updates for a batch size of 20 while we would have only 5 updates for a batch size of 100. On the other side, the computation time is more important with small batch sizes.
 
-\begin{figure}
-\centering
-\includegraphics[width=0.75\textwidth]{batchsize}
-\caption{$\lvert \mathbf{x} - \mathbf{x'} \rvert$ for different batch sizes}
-\label{fig:batch}
-\end{figure}
+
 
 \subsubsection{Influence of number of hidden units}
 
@@ -320,12 +320,7 @@ As we can see in the figure \ref{fig:hidden}, the number of hidden units has a d
 
 Since we deal with high dimensional data (images of abouts 1000 pixels each), we don't risk overfitting with a number of hidden units between 100 and 500 (the valiation loss is still below the training loss in each case). Hence, our main constraint for the choice of this parameter was the time complexity. We found that 200 or 300 was a good compromise between computing time and performances.
 
-\begin{figure}
-\centering
-\includegraphics[width=0.75\textwidth]{hidden_units}
-\caption{$\lvert \mathbf{x} - \mathbf{x'} \rvert$ for different number of hidden units}
-\label{fig:hidden}
-\end{figure}
+
 
 % define the loss we are using
 % compare the loss evolution over epochs while varying parameters 
@@ -340,6 +335,20 @@ In general, using more steps for the Gibbs sampling doesn't influence much the b
 
 \begin{figure}
 \centering
+\includegraphics[width=0.75\textwidth]{batchsize}
+\caption{$\lvert \mathbf{x} - \mathbf{x'} \rvert$ for different batch sizes}
+\label{fig:batch}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]{hidden_units}
+\caption{$\lvert \mathbf{x} - \mathbf{x'} \rvert$ for different number of hidden units}
+\label{fig:hidden}
+\end{figure}
+
+\begin{figure}
+\centering
 \includegraphics[width=0.49\textwidth]{CD}
 \includegraphics[width=0.49\textwidth]{CD_zoom}
 \caption{$\lvert \mathbf{x} - \mathbf{x'} \rvert$ for different number of Gibbs samling's steps. The right figure is a zoom of the left one.}
@@ -348,10 +357,31 @@ In general, using more steps for the Gibbs sampling doesn't influence much the b
 
 
 
-\clearpage
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.15\linewidth]{sample0_at_epoch100}
+    \includegraphics[width=0.15\linewidth]{sample2764_at_epoch100}
+    \includegraphics[width=0.15\linewidth]{sample31227_at_epoch100}
+    \includegraphics[width=0.15\linewidth]{sample44983_at_epoch100}
+    \includegraphics[width=0.15\linewidth]{sample72_at_epoch100}
+    \caption{Generated samples after 20 epochs}
+\label{fig:reconstructSample}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{MNIST_Filter_20Epochs}
+\includegraphics[width=0.45\textwidth]{CIFAR_LearnedWeights}
+\caption{Filters obtained: Left for MNIST dataset, right for CIFAR-10 dataset.}
+\label{fig:filters}
+\end{figure}
+
+
 \section{Conclusion and future work}
 
-As for other deep learning techniques, RBM implementations are costly. Hence, the use of GPU achitectures is necessary for fast computation time. Moreover, the algorithm doesn't need to converge: even for 100 epochs, we could extract meaningful results from the algorithm. For high dimensional data such as images, we can avoid overfitting by choosing optimal parameters.
+As for other deep learning techniques, RBM implementations are costly. Hence, the use of GPU achitectures is necessary for fast computation time. Moreover, even for 100 epochs, we could extract meaningful results from the algorithm. For high dimensional data such as images, we can avoid overfitting by choosing optimal parameters.
 
 There are many alternatives to the RBM studied in this project. For example, we can use what is called Persistent Contrastive Divergence: at each iteration of the algorithm, we initialize the Gibbs sampling with the sample from the previous iteration. This method allows us to minimize the risk of falling into a local minima.
 
