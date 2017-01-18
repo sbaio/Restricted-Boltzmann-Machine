@@ -57,6 +57,7 @@
 \usepackage{algorithmic}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{fullpage}
 
 
 \DeclareMathOperator*{\argmax}{\arg\!\max}
@@ -138,7 +139,7 @@ Restricted Boltzmann Machines are particular instance of undirected graphical mo
 
 It is \emph{restricted} because no connections between nodes of the same layer are allowed. Each node of one layer is connected to all the other nodes of the other layer ($h_j \leftrightarrow x_k$). The matrix $W$ characterizes the connections between the two layers: $ W_{j,k} $ is the value for the connection between $h_j$ and $x_k$. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary.
 
-\begin{figure}[H]
+\begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{rbm.png}
 \label{fig:RBM}
@@ -289,7 +290,8 @@ We implemented the RBM training algorithm in python and then we compared our imp
 We use the implementation in tensorflow provided by Gabriele Angeletti as a library gathering many deep learning models and algorithms such as convolutional networks, RNN, RBM, Deep Belief Networks...
 
 \subsection{Convergence plot}
-% training and validation plots to explain that we avoid overfitting
+
+In general, it is difficult to directly evaluate the performances of RBM. This is due to the fact that the parameter $Z$ is intractable and we are unable to compute the average loss. A solution 
 
 \subsection{Influence of different algorithm parameters}
 
@@ -297,6 +299,16 @@ We use the implementation in tensorflow provided by Gabriele Angeletti as a libr
 
 \subsubsection{Influence of number of hidden units}
 
+As we can see in the figure \ref{fig:hidden}, the number of hidden units has a direct impact on the performance of the algorithm. By increasing the number of hidden units, we can decrease the average stochastic reconstruction. In the figure, we can see that clearly 100 hidden units isn't enough; however for bigger values the curves become closer. 
+
+Since we deal with high dimensional data (images of abouts 1000 pixels each), we don't risk overfitting with a number of hidden units between 100 and 500 (the valiation loss is still below the training loss in each case). Hence, our main constraint for the choice of this parameter was the time complexity. We found that 200 or 300 was a good compromise between computing time and performances.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]{hidden_units}
+\label{fig:hidden}
+\caption{Influence of the number of hidden units}
+\end{figure}
 
 % define the loss we are using
 % compare the loss evolution over epochs while varying parameters 
