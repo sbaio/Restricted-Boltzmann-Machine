@@ -57,11 +57,8 @@
 \usepackage[]{graphicx}
 \usepackage[]{float}
 \graphicspath{{Figures/}}
-\usepackage{algorithm}
-\usepackage{algorithmic}
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage{fullpage}
 
 
 \DeclareMathOperator*{\argmax}{\arg\!\max}
@@ -142,7 +139,7 @@ We can represent the graphical model of RBM with the schema in the figure \ref{f
 \label{fig:RBM}
 \end{figure}
 
-This model is called \emph{restricted} because no connections between nodes of the same layer are allowed. Each node of one layer is connected to all the other nodes of the other layer ($h_j \leftrightarrow x_k$). The matrix $W$ characterizes the connections between the two layers: $ W_{j,k} $ is the value for the connection between $h_j$ and $x_k$. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary.
+Each node of one layer is connected to all the other nodes of the other layer ($h_j \leftrightarrow x_k$). The matrix $W$ characterizes the connections between the two layers: $ W_{j,k} $ is the value for the connection between $h_j$ and $x_k$. For simplification, we suppose that the variables $ \mathbf{x} $ and $ \mathbf{h} $ are binary.
 
 \subsection{Energy and probability}
 \label{subsec:energy}
@@ -181,7 +178,7 @@ We can also prove that given $\mathbf{x}$, $h_j$ follows a Bernoulli:
 
 %$ W_{j.}$ is the j-th row of $W$ and $sigm$ defines the sigmoid function: $$sigm(x) = \frac{1}{1+e^{-x}}$$
 
-We can prove that either by derivation of  $p(h|x)$ or by applying the \emph{Local Markov Property}: $p(z_i|z_j, \; j \neq i) =  p(z_i|\mathcal{N}(z_i))$. $\mathcal{N}(z_i)$ are the neighbors of $z_i$.
+We can prove that either by derivation of  $p(h|x)$ or by applying the \emph{Local Markov Property}: $p(z_i|z_j, \; j \neq i) =  p(z_i|\mathcal{N}(z_i))$ where $\mathcal{N}(z_i)$ are the neighbors of $z_i$.
 
 \subsection{Free energy}
 
@@ -212,7 +209,7 @@ We want to apply a stochastic gradient descent. We derive each term of the sum w
 
 \[ \frac{\partial - \log p(\mathbf{x}^{(t)})}{\partial \theta} = \mathbb{E}_h \left[ \frac{\partial E(\mathbf{x}^{(t)} ,h)}{\partial \theta} | \mathbf{x}^{(t)} \right] - \mathbb{E}_{x,h} \left[ \frac{\partial E(\mathbf{x} ,h)}{\partial \theta} \right] \]
 
-The first term is called the \emph{positive phase} and the second term the {negative phase}. Because of the difficulty to compute the seconde term, we will use an algorithm called \emph{Contrastive Divergence}. The idea is:
+The first term is called the \emph{positive phase} and the second term the \emph{negative phase}. Because of the difficulty to compute the seconde term, we will use an algorithm called \emph{Contrastive Divergence}. The idea is:
 
 \begin{enumerate}
     \item We estimate the expectation $\mathbb{E}_{x,h}$ by sampling a single point $\mathbf{\tilde x}$.
@@ -236,7 +233,7 @@ $$ h(x) =
 ~~~~,~~~~ h(x) = sigm(b + Wx) $$
 
 %Let's look at the derivative of the energy $E$ with respect to $W$. We can prove that:
-Looking at the derivative of the energy w.r.t the parameters $W, ~ b,~c$ we prove that:
+Looking at the derivative of the energy w.r.t the parameters $W, ~ b,~c$ we can find their updates:
 
 %\[ \nabla_{\mathbf{W}} E(x,h) = -h(x) x^\top \]
 
@@ -291,7 +288,7 @@ The figure \ref{fig:batch} shows the performance of RBM with different batch siz
 
 As we can see in the figure \ref{fig:hidden}, the number of hidden units has a direct impact on the performance of the algorithm. By increasing the number of hidden units, we can decrease the average stochastic reconstruction. In the figure, we can see that clearly 100 hidden units isn't enough; however for bigger values the curves become closer. 
 
-Since we deal with high dimensional data (images of abouts 1000 pixels each), we don't risk overfitting with a number of hidden units between 100 and 500 (the valiation loss is still below the training loss in each case). Hence, our main constraint for the choice of this parameter was the time complexity. We found that 200 or 300 was a good compromise between computing time and performances.
+Since we deal with high dimensional data (images of abouts 1000 pixels each), we don't risk overfitting with a number of hidden units between 100 and 500 (the valiation error keep decreasing in each case). Hence, our main constraint for the choice of this parameter was the time complexity. We found that 200 or 300 was a good compromise between computing time and performances.
 
 
 % define the loss we are using
@@ -353,7 +350,7 @@ In general, using more steps for the Gibbs sampling doesn't influence much the b
 
 \section{Conclusion and future work}
 
-As for other deep learning techniques, RBM implementations are costly. Hence, the use of GPU achitectures is necessary for fast computation time. Moreover, even for 20 epochs, we could extract meaningful features from the algorithm which can serve for classification for example. For high dimensional data such as images, we can avoid overfitting by choosing optimal hyperparameters. By stacking RBMs into Deep Belief Nets, as specified in \cite{hinton2006fast}, we can benefit from the feature extraction capability at different levels and achieve even better classification results.
+As for other deep learning techniques, RBM implementations are costly. Hence, the use of GPU achitectures is necessary for fast computation time. For high dimensional data such as images, we can avoid overfitting by choosing optimal hyperparameters. Moreover, even for 20 epochs, we could extract meaningful features from the algorithm which can serve for classification for example. By stacking RBMs into Deep Belief Nets, as specified in \cite{hinton2006fast}, we can benefit from the feature extraction capability at different levels and achieve even better classification results.
 
 There are many alternatives to the RBM training techniques studied in this project. For example, we can use Persistent Contrastive Divergence \cite{hinton2010practical} where a set of samples drawn from the model distribution is maintained at each update of the model, it works generally better than CD-1.
 %at each iteration of the algorithm, we initialize the Gibbs sampling with the sample from the previous iteration. %This method allows us to minimize the risk of falling into a local minima.
